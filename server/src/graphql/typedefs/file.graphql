@@ -1,0 +1,24 @@
+# Types
+type File implements Timestamps {
+  id: ID!
+  name: String!
+  url: String!
+  systemName: String!
+
+  # Interface required
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+# Inputs
+input FileCreateInput {
+  name: String!
+  url: String!
+  systemName: String!
+}
+
+input FileUpdateInput {
+  name: String!
+  url: String!
+  systemName: String!
+}

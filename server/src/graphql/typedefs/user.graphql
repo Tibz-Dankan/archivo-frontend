@@ -1,0 +1,31 @@
+# Types
+type User implements Timestamps {
+  id: ID!
+  name: String!
+  email: String!
+  password: String!
+  imageUrl: String
+  imageName: String
+  passwordResetToken: String
+  passwordResetExpires: Date
+
+  # Interface required
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+# Inputs
+input UserCreateInput {
+  name: String!
+  email: String!
+  password: String!
+}
+
+input UserUpdateInput {
+  name: String!
+  email: String!
+}
+
+input UpdatePasswordInput {
+  password: String!
+}
