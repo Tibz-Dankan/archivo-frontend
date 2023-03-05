@@ -1,5 +1,5 @@
 import { ApolloServer } from "apollo-server-express";
-import schema from "./schema"; // We imported this
+import schema from "./schema";
 
 const apolloServer = new ApolloServer({
   schema,

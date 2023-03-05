@@ -11,21 +11,28 @@ app.use(cors());
 
 const PORT = process.env.PORT || 8000;
 
-// app.listen(PORT, () => {
-//   console.log("Graphql server started and running on port" + PORT);
-// });
+const startGraphqlServer = async () => {
+  try {
+    await graphqlServer.start();
+
+    graphqlServer.applyMiddleware({
+      app,
+    });
+  } catch (err: any) {
+    console.log(err.message);
+  }
+};
+
+startGraphqlServer();
 
 const startApp = async () => {
   try {
     await app.listen(PORT);
     console.log(`🚀  GraphQL server running at port: ${PORT}`);
-  } catch {
+  } catch (err: any) {
     console.log("Not able to run GraphQL server");
+    console.log(err.message);
   }
 };
 
 startApp();
-
-graphqlServer.applyMiddleware({
-  app,
-});
