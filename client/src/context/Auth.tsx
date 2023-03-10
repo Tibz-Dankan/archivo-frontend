@@ -20,14 +20,19 @@ const initialState: Auth = {
 };
 
 const AuthContext = createContext<Auth>(initialState);
-const updateAuthContext = createContext<(payload: Auth) => void>(() => {});
+const AuthenticateContext = createContext<(payload: Auth) => void>(() => {});
+const LogOutContext = createContext<() => void>(() => {});
 
 export const useAuth = () => {
   return useContext<Auth>(AuthContext);
 };
 
-export const useUpdateAuth = (payload: Auth) => {
-  return useContext<(payload: Auth) => void>(updateAuthContext);
+export const useAuthenticate = (payload: Auth) => {
+  return useContext<(payload: Auth) => void>(AuthenticateContext);
+};
+
+export const useLogOut = () => {
+  return useContext<() => void>(LogOutContext);
 };
 
 interface ProviderProps {
@@ -37,21 +42,28 @@ interface ProviderProps {
 export const AuthProvider: React.FC<ProviderProps> = (props): JSX.Element => {
   const [auth, setAuth] = useState<Auth>(initialState);
 
-  const updateAuth = (payload: Auth) => {
+  const authenticate = (payload: Auth) => {
     setAuth({
       user: payload.user,
       token: payload.token,
-      isLoggedIn: payload.isLoggedIn,
+      isLoggedIn: !!payload.token,
     });
 
-    localStorage.setItem("auth", JSON.stringify(payload));
+    localStorage.setItem("auth", JSON.stringify(auth));
+  };
+
+  const logOut = () => {
+    setAuth(initialState);
+    localStorage.removeItem("auth");
   };
 
   return (
     <AuthContext.Provider value={auth}>
-      <updateAuthContext.Provider value={updateAuth}>
-        {props.children}
-      </updateAuthContext.Provider>
+      <AuthenticateContext.Provider value={authenticate}>
+        <LogOutContext.Provider value={logOut}>
+          {props.children}
+        </LogOutContext.Provider>
+      </AuthenticateContext.Provider>
     </AuthContext.Provider>
   );
 };
