@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./App.css";
+// import "./App.css";
 import { SignUp } from "./pages/SignUp";
 
 const App: React.FC = (): JSX.Element => {

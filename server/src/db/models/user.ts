@@ -3,8 +3,8 @@ import { randomBytes, createHash } from "crypto";
 
 import { PrismaClient } from "@prisma/client";
 
-interface UserInterface {
-  id: Number;
+export interface UserInterface {
+  id: string;
   name: String;
   email: String;
   password: String;
@@ -77,8 +77,8 @@ export default class User {
     });
   }
 
-  async comparePasswords(password: String, dbPassword: String) {
-    return await compare(`${password}`, `${dbPassword}`);
+  async comparePasswords(currentPassword: String, savedPassword: String) {
+    return await compare(`${currentPassword}`, `${savedPassword}`);
   }
 
   createPasswordResetToken() {

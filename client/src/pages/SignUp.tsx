@@ -2,8 +2,12 @@ import React, { Fragment, useRef } from "react";
 import { gql, useMutation } from "@apollo/client";
 
 const CREATE_USER = gql`
-  mutation createUser($name: String!, $email: String!, $password: String!) {
-    signUp(name: $name, email: $email, password: $password)
+  mutation CREATE_USER($name: String!, $email: String!, $password: String!) {
+    createUser(name: $name, email: $email, password: $password) {
+      id
+      name
+      email
+    }
   }
 `;
 
@@ -14,6 +18,7 @@ export const SignUp: React.FC = (): JSX.Element => {
 
   const [signUp, { loading, data, error }] = useMutation(CREATE_USER, {
     onCompleted: ({ response }) => {
+      console.log("response");
       console.log(response);
       // set token in global context and local storage
     },
@@ -35,6 +40,8 @@ export const SignUp: React.FC = (): JSX.Element => {
         password: password,
       },
     });
+
+    // authenticate the user here
   };
   return (
     <Fragment>

@@ -1,17 +1,16 @@
 # Types
-type User implements Timestamps {
-  id: ID!
+# type User implements Timestamps {
+type User {
+  id: ID
   name: String!
   email: String!
   password: String!
   imageUrl: String
   imageName: String
   passwordResetToken: String
-  passwordResetExpires: Date
-
-  # Interface required
-  createdAt: Date!
-  updatedAt: Date!
+  passwordResetExpires: String
+  createdAt: String # UTC string date
+  updatedAt: String # UTC string date
 }
 
 # Inputs

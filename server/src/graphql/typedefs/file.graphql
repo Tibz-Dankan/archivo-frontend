@@ -1,13 +1,14 @@
 # Types
-type File implements Timestamps {
+# type File implements Timestamps {
+type File {
   id: ID!
   name: String!
   url: String!
   systemName: String!
 
   # Interface required
-  createdAt: Date!
-  updatedAt: Date!
+  createdAt: String # UTC string date
+  updatedAt: String # UTC string date
 }
 
 # Inputs
