@@ -1,5 +1,7 @@
 import { User } from "../../../db/models";
 import { UserInterface } from "../../../db/models/user";
+import { Auth } from "../../../utils/auth";
+
 const user = new User();
 
 const userMutations = {
@@ -11,9 +13,7 @@ const userMutations = {
     }
     const newUser = await user.create(args);
 
-    // TODO: authenticate on successful register
-
-    return newUser;
+    return new Auth().authenticate(newUser);
   },
 
   login: async (_: any, args: UserInterface) => {
@@ -25,12 +25,12 @@ const userMutations = {
       args.password,
       savedUser.password
     );
-
     if (!savedUser || !isCorrectPassword) {
       throw new Error("Supplied invalid email or password");
     }
-    // TODO: authenticate on successful login
+    return new Auth().authenticate(savedUser);
   },
+
   //   updateUser: async (_, args) => {},
   //   updatePassword: async (_, args) => {},
 };

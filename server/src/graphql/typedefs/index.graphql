@@ -1,6 +1,3 @@
-# Custom Scalars
-# scalar Date
-
 type Query {
   # Users
   findUsers: [User]!
@@ -25,8 +22,8 @@ type Query {
 
 type Mutation {
   # Users
-  # createUser(user: UserCreateInput!): User!
   createUser(name: String!, email: String!, password: String!): User!
+  login(email: String!, password: String!): User!
   updateUser(id: ID!, user: UserUpdateInput!): User!
   updatePassword(id: ID!, user: UpdatePasswordInput!): User!
 

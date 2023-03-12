@@ -5,11 +5,11 @@ import { PrismaClient } from "@prisma/client";
 
 export interface UserInterface {
   id: string;
-  name: String;
-  email: String;
-  password: String;
-  passwordResetToken: String;
-  passwordResetExpires: Date;
+  name: string;
+  email: string;
+  password: string;
+  passwordResetToken: string;
+  passwordResetExpires: string; // ISOString date
 }
 
 export default class User {
