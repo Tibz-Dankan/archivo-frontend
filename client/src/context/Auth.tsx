@@ -10,12 +10,16 @@ interface User {
 export interface Auth {
   user: User;
   token: string;
+  expiresIn: number;
+  expirationTime: string;
   isLoggedIn: boolean;
 }
 
 const initialState: Auth = {
   user: { username: "", email: "", id: "", imageUrl: "" },
   token: "",
+  expiresIn: 0,
+  expirationTime: "",
   isLoggedIn: false,
 };
 
@@ -46,6 +50,8 @@ export const AuthProvider: React.FC<ProviderProps> = (props): JSX.Element => {
     setAuth({
       user: payload.user,
       token: payload.token,
+      expiresIn: payload.expiresIn,
+      expirationTime: payload.expirationTime,
       isLoggedIn: !!payload.token,
     });
 
