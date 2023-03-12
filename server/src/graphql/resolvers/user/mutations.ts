@@ -5,7 +5,7 @@ import { Auth } from "../../../utils/auth";
 const user = new User();
 
 const userMutations = {
-  createUser: async (_: any, args: UserInterface) => {
+  signup: async (_: any, args: UserInterface) => {
     console.log(args);
 
     if (await user.findByEmail(args.email)) {

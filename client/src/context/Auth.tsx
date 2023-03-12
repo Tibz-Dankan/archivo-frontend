@@ -47,15 +47,8 @@ export const AuthProvider: React.FC<ProviderProps> = (props): JSX.Element => {
   const [auth, setAuth] = useState<Auth>(initialState);
 
   const authenticate = (payload: Auth) => {
-    setAuth({
-      user: payload.user,
-      token: payload.token,
-      expiresIn: payload.expiresIn,
-      expirationTime: payload.expirationTime,
-      isLoggedIn: !!payload.token,
-    });
-
-    localStorage.setItem("auth", JSON.stringify(auth));
+    setAuth(payload);
+    localStorage.setItem("auth", JSON.stringify(payload));
   };
 
   const logOut = () => {

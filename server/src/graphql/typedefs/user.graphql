@@ -13,6 +13,13 @@ type User {
   updatedAt: String # UTC string date
 }
 
+type Auth {
+  user: User!
+  token: String!
+  expiresIn: Int!
+  expirationTime: String!
+}
+
 # Inputs
 input UserCreateInput {
   name: String!

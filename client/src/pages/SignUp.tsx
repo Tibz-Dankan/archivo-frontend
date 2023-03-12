@@ -1,12 +1,19 @@
 import React, { Fragment, useRef } from "react";
 import { gql, useMutation } from "@apollo/client";
+import { useAuth, useAuthenticate } from "../context/Auth";
 
-const CREATE_USER = gql`
-  mutation CREATE_USER($name: String!, $email: String!, $password: String!) {
-    createUser(name: $name, email: $email, password: $password) {
-      id
-      name
-      email
+const SIGNUP = gql`
+  mutation ($name: String!, $email: String!, $password: String!) {
+    signup(name: $name, email: $email, password: $password) {
+      user {
+        id
+        name
+        email
+        imageUrl
+      }
+      token
+      expiresIn
+      expirationTime
     }
   }
 `;
@@ -15,14 +22,20 @@ export const SignUp: React.FC = (): JSX.Element => {
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+  const auth = useAuth();
+  const authenticate = useAuthenticate(auth);
 
-  const [signUp, { loading, data, error }] = useMutation(CREATE_USER, {
-    onCompleted: ({ response }) => {
-      console.log("response");
-      console.log(response);
-      // set token in global context and local storage
-    },
-  });
+  const [signUp, { loading, data, error }] = useMutation(SIGNUP);
+
+  const authenticateHandler = (data: any) => {
+    authenticate({
+      user: data.signup.user,
+      token: data.signup.token,
+      expiresIn: data.signup.expiresIn,
+      expirationTime: data.signup.expirationTime,
+      isLoggedIn: !!data.signup.token,
+    });
+  };
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
@@ -40,8 +53,9 @@ export const SignUp: React.FC = (): JSX.Element => {
         password: password,
       },
     });
-
-    // authenticate the user here
+    if (data) {
+      authenticateHandler(data);
+    }
   };
   return (
     <Fragment>
