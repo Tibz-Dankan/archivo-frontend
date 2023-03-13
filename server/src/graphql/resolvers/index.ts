@@ -1,3 +1,6 @@
+import GraphQLUpload from "graphql-upload/GraphQLUpload";
+// import Upload from "graphql-upload/Upload";
+
 import { userQueries, userMutations } from "./user";
 import { fileQueries, fileMutations } from "./file";
 
@@ -6,6 +9,9 @@ const resolvers = {
     ...userQueries,
     ...fileQueries,
   },
+
+  Upload: GraphQLUpload,
+
   Mutation: {
     ...userMutations,
     ...fileMutations,
@@ -13,3 +19,12 @@ const resolvers = {
 };
 
 export default resolvers;
+
+// // Graphql upload
+// declare module 'graphql-upload' {
+//   export function processRequest<T>(
+//     request: any,
+//     response: any,
+//     options?: any
+//   ): Promise<T>;
+// }

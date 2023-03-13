@@ -2,12 +2,19 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import graphqlServer from "./graphql";
+import graphqlUploadExpress from "graphql-upload/graphqlUploadExpress";
 
 dotenv.config();
 
 const app = express();
 
-app.use(cors());
+if (process.env.NODE_ENV === "production") {
+  app.use(cors({ origin: process.env.FRONTEND_URL_PROD, credentials: true }));
+} else {
+  app.use(cors({ origin: process.env.FRONTEND_URL_DEV, credentials: true }));
+}
+
+app.use(graphqlUploadExpress());
 
 const PORT = process.env.PORT || 8000;
 

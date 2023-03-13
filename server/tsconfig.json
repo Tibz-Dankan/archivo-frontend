@@ -1,12 +1,13 @@
 {
-    "compilerOptions": {
-      "module": "commonjs",
-      "target": "es6",
-      "strict": true /* Enable all strict type-checking options. */,
-      "esModuleInterop": true,
-      "moduleResolution": "node",
-      /* Advanced Options */
-      "skipLibCheck": true /* Skip type checking of declaration files. */,
-      "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
-    }
+  "compilerOptions": {
+    "module": "commonjs",
+    // "module": "nodenext",
+    "target": "es6",
+    "strict": true /* Enable all strict type-checking options. */,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    /* Advanced Options */
+    "skipLibCheck": true /* Skip type checking of declaration files. */,
+    "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   }
+}

@@ -1,14 +1,21 @@
-# Types
-# type File implements Timestamps {
-type File {
-  id: ID!
-  name: String!
-  url: String!
-  systemName: String!
+scalar Upload
 
-  # Interface required
+# type File {
+#   filename: String!
+#   mimetype: String!
+#   encoding: String!
+# }
+
+type File {
+  id: ID
+  name: String!
+  url: String
+  systemName: String!
   createdAt: String # UTC string date
   updatedAt: String # UTC string date
+  filename: String!
+  mimetype: String!
+  encoding: String!
 }
 
 # Inputs
