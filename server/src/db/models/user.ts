@@ -1,4 +1,7 @@
-import { hash, compare } from "bcryptjs";
+// import { hash, compare } from "bcryptjs";
+import bcryptjs from "bcryptjs";
+const { hash, compare } = bcryptjs;
+
 import { randomBytes, createHash } from "crypto";
 
 import { PrismaClient } from "@prisma/client";

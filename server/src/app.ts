@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import graphqlServer from "./graphql";
-import graphqlUploadExpress from "graphql-upload/graphqlUploadExpress";
+import graphqlUploadExpress from "graphql-upload/graphqlUploadExpress.mjs";
 
 dotenv.config();
 

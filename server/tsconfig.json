@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    // "module": "nodenext",
-    "target": "es6",
+    // "module": "commonjs",
+    // "target": "es6",
+    "module": "ESNext",
+    "target": "ESNext",
     "strict": true /* Enable all strict type-checking options. */,
     "esModuleInterop": true,
     "moduleResolution": "node",
