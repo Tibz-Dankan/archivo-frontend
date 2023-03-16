@@ -11,7 +11,7 @@ const httpLink = createHttpLink({
 const authLink = setContext((_, { headers }) => {
   const data: any = localStorage.getItem("auth");
   const parsedDate = JSON.parse(data);
-  const token = parsedDate.token;
+  const token = parsedDate?.token;
 
   return {
     headers: {

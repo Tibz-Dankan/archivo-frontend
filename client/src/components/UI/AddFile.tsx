@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { FilePicker } from "./filePicker";
+import { FilePicker } from "./FilePicker";
 const ADD_FILE = gql`
   mutation ($file: Upload!) {
     singleUpload(file: $file) {
@@ -14,7 +14,7 @@ export const AddFile: React.FC = (): JSX.Element => {
 
   const [file, setFile] = useState(null);
 
-  const saveFileHandler = () => {
+  const onSelectHandler = () => {
     setFile(file);
   };
 
@@ -27,8 +27,9 @@ export const AddFile: React.FC = (): JSX.Element => {
     <Fragment>
       {loading && <p>Uploading...</p>}
       {error && <p>{error.message}</p>}
-      <FilePicker onSave={saveFileHandler} />
-      <button onClick={addFileHandler}></button>
+      {/* File preview here */}
+      {!file && <FilePicker onSave={onSelectHandler} />}
+      {file && <button onClick={addFileHandler}></button>}
     </Fragment>
   );
 };
