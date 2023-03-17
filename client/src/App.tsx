@@ -64,6 +64,14 @@ const App: React.FC = (): JSX.Element => {
       element: <SignIn />,
     },
     {
+      path: "/login",
+      element: <Navigate to="/signin" />,
+    },
+    {
+      path: "/register",
+      element: <Navigate to="/signup" />,
+    },
+    {
       path: "*",
       element: <Navigate to="/" />,
     },

@@ -20,6 +20,8 @@ export const AddFile: React.FC = (): JSX.Element => {
 
   const addFileHandler = () => {
     if (!file) return;
+    console.log("file")
+    console.log(file)
     addFile({ variables: { file: file } });
   };
 
