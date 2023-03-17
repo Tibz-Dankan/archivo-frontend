@@ -13,8 +13,7 @@ export const FilePicker: React.FC<FilePickerProps> = (props): JSX.Element => {
   const validateHandler = (file: any) => {
     try {
       const fileValidator = new FileValidator(file);
-      // fileValidator.valid();
-      fileValidator.isImage();
+      return fileValidator.valid();
     } catch (err: any) {
       if (err) setError(err.message);
     }
@@ -25,8 +24,7 @@ export const FilePicker: React.FC<FilePickerProps> = (props): JSX.Element => {
   };
 
   const saveHandler = () => {
-    validateHandler(file);
-    props.onSave(file);
+    validateHandler(file) && props.onSave(file);
   };
 
   // TODO: add options of cancel file when selected

@@ -14,14 +14,12 @@ export const AddFile: React.FC = (): JSX.Element => {
 
   const [file, setFile] = useState(null);
 
-  const onSelectHandler = () => {
+  const onSelectHandler = (file: any) => {
     setFile(file);
   };
 
   const addFileHandler = () => {
     if (!file) return;
-    console.log("file")
-    console.log(file)
     addFile({ variables: { file: file } });
   };
 
@@ -31,7 +29,7 @@ export const AddFile: React.FC = (): JSX.Element => {
       {error && <p>{error.message}</p>}
       {/* File preview here */}
       {!file && <FilePicker onSave={onSelectHandler} />}
-      {file && <button onClick={addFileHandler}></button>}
+      {file && <button onClick={addFileHandler}>Upload</button>}
     </Fragment>
   );
 };
