@@ -1,12 +1,14 @@
 import React from "react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
-import { createHttpLink } from "@apollo/client";
+import { from, createHttpLink } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
+import { createUploadLink } from "apollo-upload-client";
 import { URI } from "../constants/constants";
 
 const httpLink = createHttpLink({
   uri: URI,
 });
+const uploadLink = createUploadLink({ uri: URI });
 
 const authLink = setContext((_, { headers }) => {
   const data: any = localStorage.getItem("auth");
@@ -17,12 +19,15 @@ const authLink = setContext((_, { headers }) => {
     headers: {
       ...headers,
       authorization: token ? `Bearer ${token}` : "",
+      "Apollo-Require-Preflight": "true",
     },
   };
 });
 
+const additiveLink = from([authLink, uploadLink, httpLink]);
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: additiveLink,
   cache: new InMemoryCache(),
 });
 
