@@ -14,7 +14,27 @@ export class FileValidator {
     return true;
   }
 
-  isImage() {
+  size() {
+    const kb = 1024;
+    const mb = kb * kb;
+    const gb = mb * mb;
+    const size = this.file.size;
+
+    if (size < kb) {
+      return `${size} byte(s)`;
+    }
+    if (size < mb) {
+      return `${Math.floor(size / kb)} kb`;
+    }
+    if (size < gb) {
+      return `${Math.floor(size / mb)} mb`;
+    }
+    if (size > gb) {
+      return `${Math.floor(size / gb)} gb`;
+    }
+  }
+
+  private image() {
     const type = {
       jpeg: "image/jpeg",
       png: "image/png",
@@ -27,9 +47,20 @@ export class FileValidator {
     if (isJPEG || isJPG || isPNG) {
       return this.valid();
     }
-    throw new Error(
-      "File chosen must be an image of type .png or .jpeg or .jpg"
-    );
+  }
+
+  isImage() {
+    if (!this.image()) return false;
+    return true;
+  }
+
+  mustBeImage() {
+    if (!this.image()) {
+      throw new Error(
+        "File chosen must be an image of type .png or .jpeg or .jpg"
+      );
+    }
+    return true;
   }
 
   valid() {
