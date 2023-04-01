@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import { useAuth } from "../context/Auth";
 import { AddFile } from "../components/UI/AddFile";
 import { CreateFolder } from "../components/UI/CreateFolder";
+import { FindFolderByOwnerId } from "../components/UI/FindFolderByOwnerId";
 
 export const File: React.FC = (): JSX.Element => {
   const auth = useAuth();
@@ -14,6 +15,7 @@ export const File: React.FC = (): JSX.Element => {
       <div>File</div>
       <AddFile />
       <CreateFolder />
+      <FindFolderByOwnerId />
     </Fragment>
   );
 };
