@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
-
+// fix the error here
 interface Folder {
   id: string;
   name: string;
