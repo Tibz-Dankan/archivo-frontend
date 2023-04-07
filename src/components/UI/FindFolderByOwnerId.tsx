@@ -1,6 +1,7 @@
 import React from "react";
 import { gql, useQuery } from "@apollo/client";
 import { useAuth, Auth } from "../../context/Auth";
+import { useUpdateFolder } from "../../context/Folder";
 
 interface Folder {
   id: string;
@@ -31,6 +32,7 @@ export const FindFolderByOwnerId: React.FC = () => {
   const ownerId: string = auth.user.id;
   console.log("ownerId/UserId");
   console.log(ownerId);
+  const updateFolders = useUpdateFolder([]);
 
   const { loading, error, data } = useQuery<FindFolderByOwnerIdQueryResult>(
     FIND_FOLDER_BY_OWNER_ID,
@@ -51,30 +53,7 @@ export const FindFolderByOwnerId: React.FC = () => {
     return <p>No folders found.</p>;
   }
 
-  // TODO: update folders using context
+  updateFolders(data.findFolderByOwnerId);
 
-  const folderRows = data.findFolderByOwnerId.map((folder) => (
-    <tr key={folder.id}>
-      <td>{folder.id}</td>
-      <td>{folder.name}</td>
-      <td>{folder.ownerId}</td>
-      <td>{folder.createdAt}</td>
-      <td>{folder.updatedAt}</td>
-    </tr>
-  ));
-
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Owner ID</th>
-          <th>Created At</th>
-          <th>Updated At</th>
-        </tr>
-      </thead>
-      <tbody>{folderRows}</tbody>
-    </table>
-  );
+  return <>My Folders</>;
 };

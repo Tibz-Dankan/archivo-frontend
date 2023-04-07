@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 // import "./App.css";
 import { Home } from "./pages/Home";
-import { File } from "./pages/Files";
+import { MyFolders } from "./pages/MyFolders";
 import { SignUp } from "./pages/SignUp";
 import { SignIn } from "./pages/SignIn";
 import { Auth, useAuth, useAuthenticate } from "./context/Auth";
@@ -79,12 +79,12 @@ const App: React.FC = (): JSX.Element => {
 
   const authRouter = createBrowserRouter([
     {
-      path: "/files",
-      element: <File />,
+      path: "/my-folders",
+      element: <MyFolders />,
     },
     {
       path: "*",
-      element: <Navigate to="/files" />,
+      element: <Navigate to="/my-folders" />,
     },
   ]);
 
