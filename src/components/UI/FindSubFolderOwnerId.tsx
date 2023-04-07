@@ -1,8 +1,6 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
-// fix the error here
-// Please fix error as a soon as possible
-// Please fix error as a soon as possible
+import { useAuth, Auth } from "../../context/Auth";
 interface Folder {
   id: string;
   name: string;
@@ -15,12 +13,8 @@ interface QueryData {
   findSubFolderByOwnerId: Folder[];
 }
 
-interface Props {
-  ownerId: string;
-}
-
 const FIND_SUBFOLDERS_QUERY = gql`
-  query FindSubfoldersByOwnerId($ownerId: ID!) {
+  query ($ownerId: ID!) {
     findSubFolderByOwnerId(id: $ownerId) {
       id
       name
@@ -31,14 +25,13 @@ const FIND_SUBFOLDERS_QUERY = gql`
   }
 `;
 
-const FindSubFolderByOwnerId: React.FC<Props> = ({ ownerId }): JSX.Element => {
-  const { loading, error, data } =
-    useQuery <
-    QueryData >
-    (FIND_SUBFOLDERS_QUERY,
-    {
-      variables: { ownerId },
-    });
+const FindSubFolderByOwnerId: React.FC = (): JSX.Element => {
+  const auth: Auth = useAuth();
+  const ownerId: string = auth.user.id;
+
+  const { loading, error, data } = useQuery<QueryData>(FIND_SUBFOLDERS_QUERY, {
+    variables: { ownerId },
+  });
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
