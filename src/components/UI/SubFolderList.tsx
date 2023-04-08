@@ -1,7 +1,7 @@
 import React from "react";
 import { useSubFolder } from "../../context/SubFolder";
 
-export const SubFolders: React.FC = () => {
+export const SubFolderList: React.FC = () => {
   const subFolders = useSubFolder();
   //TODO: get files from context
   //TODO: provide more styling for the subfolder
