@@ -7,6 +7,7 @@ import { MyFolders } from "./pages/MyFolders";
 import { SignUp } from "./pages/SignUp";
 import { SignIn } from "./pages/SignIn";
 import { Auth, useAuth, useAuthenticate } from "./context/Auth";
+import { Folder } from "./components/UI/Folder";
 
 const App: React.FC = (): JSX.Element => {
   const auth: Auth = useAuth();
@@ -81,6 +82,10 @@ const App: React.FC = (): JSX.Element => {
     {
       path: "/my-folders",
       element: <MyFolders />,
+    },
+    {
+      path: "/my-folder-idx",
+      element: <Folder />,
     },
     {
       path: "*",
