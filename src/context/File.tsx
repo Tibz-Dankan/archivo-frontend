@@ -5,6 +5,7 @@ export interface file {
   ownerId: string;
   name: string;
   systemName: string;
+  url: string;
   createdAt: string;
   updatedAt: string;
 }
