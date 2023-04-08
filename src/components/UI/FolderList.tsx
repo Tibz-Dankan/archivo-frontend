@@ -1,10 +1,10 @@
 import React from "react";
 import { useFolder } from "../../context/Folder";
 
-export const Folders: React.FC = () => {
+export const FolderList: React.FC = () => {
   const folders = useFolder();
 
-  // TODO: provide more standard  styling for the folders
+  // TODO: provide more standard  styling for the folders(later)
   // TODO: make folders clickable
   // TODO: on folder lead to path "my-folder-idx"
   // TODO: update folder content in the context on the above click
