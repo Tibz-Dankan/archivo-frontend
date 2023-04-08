@@ -7,8 +7,20 @@ export interface SubFolder {
   createdAt: string;
   updatedAt: string;
 }
+const folderOneInitialState: SubFolder = {
+  id: "",
+  ownerId: "",
+  name: "",
+  createdAt: "",
+  updatedAt: "",
+};
 
 const initialState: SubFolder[] = [];
+
+const SubFolderOneContext = createContext<SubFolder>(folderOneInitialState);
+const UpdateSubFolderOneContext = createContext<(payload: SubFolder) => void>(
+  () => {}
+);
 
 const SubFolderContext = createContext<SubFolder[]>(initialState);
 const UpdateSubFolderContext = createContext<(payload: SubFolder[]) => void>(
@@ -17,6 +29,13 @@ const UpdateSubFolderContext = createContext<(payload: SubFolder[]) => void>(
 const AddSubFolderContext = createContext<(payload: SubFolder) => void>(
   () => {}
 );
+
+export const useSubFolderOne = () => {
+  return useContext<SubFolder>(SubFolderOneContext);
+};
+export const useUpdateSubFolderOne = (payload: SubFolder) => {
+  return useContext<(payload: SubFolder) => void>(UpdateSubFolderOneContext);
+};
 
 export const useSubFolder = () => {
   return useContext<SubFolder[]>(SubFolderContext);
@@ -46,11 +65,21 @@ export const SubFolderProvider: React.FC<ProviderProps> = (
     setFolders((folders) => [payload, ...folders]);
   };
 
+  const [subFolderOne, setSubFolderOne] = useState(folderOneInitialState);
+
+  const updateSubFolderOne = (payload: SubFolder) => {
+    setSubFolderOne(payload);
+  };
+
   return (
     <SubFolderContext.Provider value={folders}>
       <UpdateSubFolderContext.Provider value={updateSubFolders}>
         <AddSubFolderContext.Provider value={addSubFolder}>
-          {props.children}
+          <SubFolderOneContext.Provider value={subFolderOne}>
+            <UpdateSubFolderOneContext.Provider value={updateSubFolderOne}>
+              {props.children}
+            </UpdateSubFolderOneContext.Provider>
+          </SubFolderOneContext.Provider>
         </AddSubFolderContext.Provider>
       </UpdateSubFolderContext.Provider>
     </SubFolderContext.Provider>
