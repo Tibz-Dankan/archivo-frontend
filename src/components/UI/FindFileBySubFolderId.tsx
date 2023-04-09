@@ -35,10 +35,10 @@ const FIND_FILES_QUERY = gql`
 
 export const FindFileBySubFolderId: React.FC<props> = (props): JSX.Element => {
   const updateFiles = useUpdateFile([]);
-  const parentId = props.parentId;
+  const subFolderId = props.parentId;
 
   const { loading, error, data } = useQuery<QueryData>(FIND_FILES_QUERY, {
-    variables: { parentId },
+    variables: { subFolderId },
   });
 
   if (loading) return <p>Loading...</p>;
