@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Folder, useFolder, useUpdateFolderOne } from "../../context/Folder";
 import { useNavigate } from "react-router-dom";
+import { CreateFolder } from "./CreateFolder";
 
 export const FolderList: React.FC = () => {
   const folders = useFolder();
@@ -27,9 +28,9 @@ export const FolderList: React.FC = () => {
   // TODO: rename this component to FolderList (done)
   // TODO: create another component called "Folder", this component should contain contents updated in the above(done)
 
-  const folderRows = folders.map((folder) => (
+  const folderRows = folders.map((folder, index) => (
     <tr key={folder.id} onClick={() => updateFolderHandler(folder)}>
-      <td>{folder.id}</td>
+      <td>{index + 1}</td>
       <td>{folder.name}</td>
       <td>{folder.ownerId}</td>
       <td>{folder.createdAt}</td>
@@ -38,17 +39,22 @@ export const FolderList: React.FC = () => {
   ));
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Owner ID</th>
-          <th>Created At</th>
-          <th>Updated At</th>
-        </tr>
-      </thead>
-      <tbody>{folderRows}</tbody>
-    </table>
+    <Fragment>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Name</th>
+              <th>Owner ID</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+            </tr>
+          </thead>
+          <tbody>{folderRows}</tbody>
+        </table>
+        <CreateFolder />
+      </div>
+    </Fragment>
   );
 };
