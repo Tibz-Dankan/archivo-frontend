@@ -8,6 +8,7 @@ import { SignUp } from "./pages/SignUp";
 import { SignIn } from "./pages/SignIn";
 import { Auth, useAuth, useAuthenticate } from "./context/Auth";
 import { FolderContent } from "./pages/FolderContent";
+import { SubFolderContent } from "./pages/SubFolderContent";
 
 const App: React.FC = (): JSX.Element => {
   const auth: Auth = useAuth();
@@ -86,6 +87,10 @@ const App: React.FC = (): JSX.Element => {
     {
       path: "/my-folder-idx",
       element: <FolderContent />,
+    },
+    {
+      path: "/my-sub-folder-idx",
+      element: <SubFolderContent />,
     },
     {
       path: "*",
