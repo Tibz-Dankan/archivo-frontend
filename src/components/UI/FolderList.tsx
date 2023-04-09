@@ -53,7 +53,7 @@ export const FolderList: React.FC = () => {
           </thead>
           <tbody>{folderRows}</tbody>
         </table>
-        <CreateFolder />
+        {/* <CreateFolder /> */}
       </div>
     </Fragment>
   );

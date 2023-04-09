@@ -3,6 +3,10 @@ import { gql, useMutation } from "@apollo/client";
 import { useAuth, Auth } from "../../context/Auth";
 import { Folder, useAddFolder } from "../../context/Folder";
 
+interface Props {
+  new: (folder: Folder) => void;
+}
+
 const CREATE_FOLDER = gql`
   mutation ($ownerId: String!, $name: String!) {
     createFolder(ownerId: $ownerId, name: $name) {
@@ -15,7 +19,7 @@ const CREATE_FOLDER = gql`
   }
 `;
 
-export const CreateFolder: React.FC = () => {
+export const CreateFolder: React.FC<Props> = (props) => {
   const [createFolder, { loading, error, data }] = useMutation(CREATE_FOLDER);
   const nameRef = useRef<HTMLInputElement>(null);
 
@@ -38,6 +42,10 @@ export const CreateFolder: React.FC = () => {
     addFolder(payload);
   };
 
+  const newFolderHandler = (folder: Folder) => {
+    props.new(folder);
+  };
+
   const createFolderHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     const name = nameRef.current?.value;
@@ -50,7 +58,10 @@ export const CreateFolder: React.FC = () => {
         },
       });
       if (data) {
-        addFolderHandler(data);
+        console.log("New Folder data");
+        console.log(data);
+        // addFolderHandler(data);
+        newFolderHandler(data.createFolder);
       }
     } catch (err) {
       console.error(err);
