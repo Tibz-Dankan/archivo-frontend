@@ -1,7 +1,7 @@
 import React from "react";
 import { useFile } from "../../context/File";
 
-const FileList: React.FC = () => {
+export const FileList: React.FC = () => {
   const files = useFile();
 
   return (
@@ -16,5 +16,3 @@ const FileList: React.FC = () => {
     </ul>
   );
 };
-
-export default FileList;

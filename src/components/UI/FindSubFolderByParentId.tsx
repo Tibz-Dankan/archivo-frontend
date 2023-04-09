@@ -30,7 +30,9 @@ const FIND_SUBFOLDERS_QUERY = gql`
   }
 `;
 
-const FindSubFolderByParentId: React.FC<props> = (props): JSX.Element => {
+export const FindSubFolderByParentId: React.FC<props> = (
+  props
+): JSX.Element => {
   const updateSubFolders = useUpdateSubFolder([]);
   const parentId = props.parentId;
 
@@ -47,5 +49,3 @@ const FindSubFolderByParentId: React.FC<props> = (props): JSX.Element => {
 
   return <p>Sub Folders</p>;
 };
-
-export default FindSubFolderByParentId;
