@@ -8,6 +8,9 @@ import { SubFolderList } from "../components/UI/SubFolderList";
 export const FolderContent: React.FC = () => {
   const folder = useFolderOne();
 
+  console.log("folder");
+  console.log(folder);
+
   return (
     <Fragment>
       <div>

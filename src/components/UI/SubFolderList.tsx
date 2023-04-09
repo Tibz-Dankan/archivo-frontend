@@ -1,16 +1,18 @@
-import React from "react";
-import {
-  SubFolder,
-  useSubFolder,
-  useUpdateSubFolderOne,
-} from "../../context/SubFolder";
+import React, { Fragment } from "react";
+import { SubFolder, useSubFolder } from "../../context/SubFolder";
+import { useUpdateSubFolderOne } from "../../context/SubFolder";
+import { useUpdateFolderOne } from "../../context/Folder";
 import { useNavigate } from "react-router-dom";
+import { CreateSubFolder } from "./createSubFolder";
+import { useFolderOne } from "../../context/Folder";
 
 export const SubFolderList: React.FC = () => {
   const subFolders = useSubFolder();
+  const parentFolder = useFolderOne();
   //TODO: provide more styling for the subfolder
 
-  const updateSubFolderOne = useUpdateSubFolderOne({
+  // const updateSubFolderOne = useUpdateSubFolderOne({
+  const updateFolderOne = useUpdateFolderOne({
     id: "",
     ownerId: "",
     name: "",
@@ -21,22 +23,28 @@ export const SubFolderList: React.FC = () => {
   const navigate = useNavigate();
 
   const subFolderUpdateHandler = (payload: SubFolder) => {
-    updateSubFolderOne(payload);
+    // updateSubFolderOne(payload);
+    updateFolderOne(payload);
     navigate("/my-sub-folder-idx");
   };
 
   return (
-    <ul>
-      {subFolders.map((subFolder) => (
-        <li
-          key={subFolder.id}
-          onClick={() => subFolderUpdateHandler(subFolder)}
-        >
-          <span>{subFolder.name}</span>
-          <span>{subFolder.createdAt}</span>
-          <span>{subFolder.updatedAt}</span>
-        </li>
-      ))}
-    </ul>
+    <Fragment>
+      <div>
+        <ul>
+          {subFolders.map((subFolder) => (
+            <li
+              key={subFolder.id}
+              onClick={() => subFolderUpdateHandler(subFolder)}
+            >
+              <span>{subFolder.name}</span>
+              <span>{subFolder.createdAt}</span>
+              <span>{subFolder.updatedAt}</span>
+            </li>
+          ))}
+        </ul>
+        <CreateSubFolder parentId={parentFolder.id} />
+      </div>
+    </Fragment>
   );
 };
