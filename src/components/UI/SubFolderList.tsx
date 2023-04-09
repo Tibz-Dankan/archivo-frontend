@@ -1,9 +1,8 @@
 import React, { Fragment } from "react";
 import { SubFolder, useSubFolder } from "../../context/SubFolder";
-import { useUpdateSubFolderOne } from "../../context/SubFolder";
 import { useUpdateFolderOne } from "../../context/Folder";
 import { useNavigate } from "react-router-dom";
-import { CreateSubFolder } from "./createSubFolder";
+import { CreateSubFolder } from "./CreateSubFolder";
 import { useFolderOne } from "../../context/Folder";
 
 export const SubFolderList: React.FC = () => {
@@ -11,7 +10,6 @@ export const SubFolderList: React.FC = () => {
   const parentFolder = useFolderOne();
   //TODO: provide more styling for the subfolder
 
-  // const updateSubFolderOne = useUpdateSubFolderOne({
   const updateFolderOne = useUpdateFolderOne({
     id: "",
     ownerId: "",
@@ -23,7 +21,6 @@ export const SubFolderList: React.FC = () => {
   const navigate = useNavigate();
 
   const subFolderUpdateHandler = (payload: SubFolder) => {
-    // updateSubFolderOne(payload);
     updateFolderOne(payload);
     navigate("/my-sub-folder-idx");
   };
