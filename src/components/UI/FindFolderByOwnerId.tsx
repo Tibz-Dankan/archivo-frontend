@@ -13,6 +13,9 @@ interface Folder {
   createdAt: string;
   updatedAt: string;
 }
+interface folderObj {
+  data: Folder[];
+}
 
 interface FindFolderByOwnerIdQueryResult {
   findFolderByOwnerId: Folder[];
@@ -34,6 +37,8 @@ export const FindFolderByOwnerId: React.FC = () => {
   const auth: Auth = useAuth();
   const ownerId: string = auth.user.id;
   let folders: Folder[] = [];
+
+  const folderObj: folderObj = { data: [] };
   const updateFolders = useUpdateFolder([]);
   const navigate = useNavigate();
 
@@ -48,12 +53,6 @@ export const FindFolderByOwnerId: React.FC = () => {
   const updateFolderHandler = (payload: Folder) => {
     updateFolderOne(payload);
     navigate("/my-folder-idx", { replace: true });
-  };
-
-  const onCreateNewFolder = (folder: Folder) => {
-    folders = [...folders, folder];
-    console.log("new folder added");
-    console.log(folders);
   };
 
   const { loading, error, data } = useQuery<FindFolderByOwnerIdQueryResult>(
@@ -75,10 +74,20 @@ export const FindFolderByOwnerId: React.FC = () => {
     return <p>No folders found.</p>;
   }
 
-  folders = data.findFolderByOwnerId;
+  // folders = data.findFolderByOwnerId;
+  folderObj.data = data.findFolderByOwnerId;
 
-  // console.log("folders");
-  // console.log(folders);
+  const onCreateNewFolder = (folder: Folder) => {
+    console.log("new folder");
+    console.log(folder);
+    // folders = [...folders, folder];
+
+    folderObj.data = [...folderObj.data, folder];
+    console.log("new folder added");
+    console.log(folderObj);
+  };
+  console.log("new folder added out side function value");
+  console.log(folderObj);
 
   return (
     <Fragment>
@@ -95,7 +104,7 @@ export const FindFolderByOwnerId: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {folders.map((folder, index) => (
+            {folderObj.data.map((folder, index) => (
               <tr key={folder.id} onClick={() => updateFolderHandler(folder)}>
                 <td>{index + 1}</td>
                 <td>{folder.name}</td>

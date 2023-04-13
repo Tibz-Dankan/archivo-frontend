@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { useAuth, Auth } from "../../context/Auth";
 import { Folder, useAddFolder } from "../../context/Folder";
@@ -57,16 +57,19 @@ export const CreateFolder: React.FC<Props> = (props) => {
           name: name,
         },
       });
-      if (data) {
-        console.log("New Folder data");
-        console.log(data);
-        // addFolderHandler(data);
-        newFolderHandler(data.createFolder);
-      }
     } catch (err) {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    const saveNewFolder = () => {
+      if (data) {
+        newFolderHandler(data.createFolder);
+      }
+    };
+    saveNewFolder();
+  }, [data]);
 
   return (
     <form onSubmit={(event) => createFolderHandler(event)}>
