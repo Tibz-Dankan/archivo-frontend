@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { gql, useQuery } from "@apollo/client";
 import { useAuth, Auth } from "../../context/Auth";
 import { useUpdateFolder } from "../../context/Folder";
@@ -82,12 +82,12 @@ export const FindFolderByOwnerId: React.FC = () => {
     console.log(folder);
     // folders = [...folders, folder];
 
-    folderObj.data = [...folderObj.data, folder];
-    console.log("new folder added");
-    console.log(folderObj);
+    // folderObj.data = [...folderObj.data, folder];
+    // console.log("new folder added");
+    // console.log(folderObj);
   };
-  console.log("new folder added out side function value");
-  console.log(folderObj);
+  // console.log("new folder added out side function value");
+  // console.log(folderObj);
 
   return (
     <Fragment>
