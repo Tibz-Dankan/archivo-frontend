@@ -2,9 +2,12 @@ import React, { Fragment } from "react";
 import { Folder, useFolder, useUpdateFolderOne } from "../../context/Folder";
 import { useNavigate } from "react-router-dom";
 import { CreateFolder } from "./CreateFolder";
+import { useFolderStore } from "../../store/folder";
 
 export const FolderList: React.FC = () => {
-  const folders = useFolder();
+  // const folders = useFolder();
+
+  const folders = useFolderStore((state: any) => state.folders);
 
   const updateFolderOne = useUpdateFolderOne({
     id: "",
@@ -28,7 +31,7 @@ export const FolderList: React.FC = () => {
   // TODO: rename this component to FolderList (done)
   // TODO: create another component called "Folder", this component should contain contents updated in the above(done)
 
-  const folderRows = folders.map((folder, index) => (
+  const folderRows = folders.map((folder: any, index: any) => (
     <tr key={folder.id} onClick={() => updateFolderHandler(folder)}>
       <td>{index + 1}</td>
       <td>{folder.name}</td>

@@ -5,6 +5,8 @@ import { useUpdateFolder } from "../../context/Folder";
 import { useUpdateFolderOne } from "../../context/Folder";
 import { useNavigate } from "react-router-dom";
 import { CreateFolder } from "./CreateFolder";
+// import { findFolderByOwner } from "../graphql/queries/findFolderByOwner";
+import { useFolderStore } from "../../store/folder";
 
 interface Folder {
   id: string;
@@ -36,10 +38,10 @@ const FIND_FOLDER_BY_OWNER_ID = gql`
 export const FindFolderByOwnerId: React.FC = () => {
   const auth: Auth = useAuth();
   const ownerId: string = auth.user.id;
-  let folders: Folder[] = [];
+  // let folders: Folder[] = [];
 
   const folderObj: folderObj = { data: [] };
-  const updateFolders = useUpdateFolder([]);
+  // const updateFolders = useUpdateFolder([]);
   const navigate = useNavigate();
 
   const updateFolderOne = useUpdateFolderOne({
@@ -50,10 +52,10 @@ export const FindFolderByOwnerId: React.FC = () => {
     updatedAt: "",
   });
 
-  const updateFolderHandler = (payload: Folder) => {
-    updateFolderOne(payload);
-    navigate("/my-folder-idx", { replace: true });
-  };
+  // const updateFolderHandler = (payload: Folder) => {
+  //   updateFolderOne(payload);
+  //   navigate("/my-folder-idx", { replace: true });
+  // };
 
   const { loading, error, data } = useQuery<FindFolderByOwnerIdQueryResult>(
     FIND_FOLDER_BY_OWNER_ID,
@@ -74,26 +76,22 @@ export const FindFolderByOwnerId: React.FC = () => {
     return <p>No folders found.</p>;
   }
 
-  // folders = data.findFolderByOwnerId;
-  folderObj.data = data.findFolderByOwnerId;
+  const updateFolders = useFolderStore((state: any) =>
+    state.updateFolders(data.findFolderByOwnerId)
+  );
+
+  // folderObj.data = data.findFolderByOwnerId;
 
   const onCreateNewFolder = (folder: Folder) => {
     console.log("new folder");
     console.log(folder);
-    // folders = [...folders, folder];
-
-    // folderObj.data = [...folderObj.data, folder];
-    // console.log("new folder added");
-    // console.log(folderObj);
   };
-  // console.log("new folder added out side function value");
-  // console.log(folderObj);
 
   return (
     <Fragment>
       <div>
         <h3>My Folders</h3>
-        <table>
+        {/* <table>
           <thead>
             <tr>
               <th>No</th>
@@ -115,7 +113,7 @@ export const FindFolderByOwnerId: React.FC = () => {
             ))}
           </tbody>
         </table>
-        <CreateFolder new={onCreateNewFolder} />
+        <CreateFolder new={onCreateNewFolder} /> */}
       </div>
     </Fragment>
   );
