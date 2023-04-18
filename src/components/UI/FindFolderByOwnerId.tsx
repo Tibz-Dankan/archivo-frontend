@@ -3,6 +3,7 @@ import { gql, useQuery } from "@apollo/client";
 import { useAuth, Auth } from "../../context/Auth";
 import { useDispatch } from "react-redux";
 import { updateFolders } from "../../store/actions/folder";
+import { useSelector } from "react-redux";
 
 interface Folder {
   id: string;
@@ -29,7 +30,7 @@ const FIND_FOLDER_BY_OWNER_ID = gql`
 `;
 
 export const FindFolderByOwnerId: React.FC = () => {
-  const auth: Auth = useAuth();
+  const auth: Auth = useSelector((state: any) => state.auth);
   const ownerId: string = auth.user.id;
 
   const dispatch: any = useDispatch();

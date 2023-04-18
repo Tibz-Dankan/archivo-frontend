@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
-import { useAuth, Auth } from "../../context/Auth";
+import { useSelector } from "react-redux";
+import { Auth } from "../../store/reducers/auth";
 interface Folder {
   id: string;
   name: string;
@@ -26,7 +27,7 @@ const FIND_SUBFOLDERS_QUERY = gql`
 `;
 
 const FindSubFolderByOwnerId: React.FC = (): JSX.Element => {
-  const auth: Auth = useAuth();
+  const auth: Auth = useSelector((state: any) => state.auth);
   const ownerId: string = auth.user.id;
 
   const { loading, error, data } = useQuery<QueryData>(FIND_SUBFOLDERS_QUERY, {
