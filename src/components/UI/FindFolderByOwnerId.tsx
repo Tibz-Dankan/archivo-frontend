@@ -1,12 +1,8 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment } from "react";
 import { gql, useQuery } from "@apollo/client";
 import { useAuth, Auth } from "../../context/Auth";
-import { useUpdateFolder } from "../../context/Folder";
-import { useUpdateFolderOne } from "../../context/Folder";
-import { useNavigate } from "react-router-dom";
-import { CreateFolder } from "./CreateFolder";
-// import { findFolderByOwner } from "../graphql/queries/findFolderByOwner";
-import { useFolderStore } from "../../store/folder";
+import { useDispatch } from "react-redux";
+import { updateFolders } from "../../store/actions/folder";
 
 interface Folder {
   id: string;
@@ -14,9 +10,6 @@ interface Folder {
   ownerId: string;
   createdAt: string;
   updatedAt: string;
-}
-interface folderObj {
-  data: Folder[];
 }
 
 interface FindFolderByOwnerIdQueryResult {
@@ -38,24 +31,12 @@ const FIND_FOLDER_BY_OWNER_ID = gql`
 export const FindFolderByOwnerId: React.FC = () => {
   const auth: Auth = useAuth();
   const ownerId: string = auth.user.id;
-  // let folders: Folder[] = [];
 
-  const folderObj: folderObj = { data: [] };
-  // const updateFolders = useUpdateFolder([]);
-  const navigate = useNavigate();
+  const dispatch: any = useDispatch();
 
-  const updateFolderOne = useUpdateFolderOne({
-    id: "",
-    ownerId: "",
-    name: "",
-    createdAt: "",
-    updatedAt: "",
-  });
-
-  // const updateFolderHandler = (payload: Folder) => {
-  //   updateFolderOne(payload);
-  //   navigate("/my-folder-idx", { replace: true });
-  // };
+  const updateFoldersHandler = async (folders: Folder[]) => {
+    await dispatch(updateFolders(folders));
+  };
 
   const { loading, error, data } = useQuery<FindFolderByOwnerIdQueryResult>(
     FIND_FOLDER_BY_OWNER_ID,
@@ -76,16 +57,7 @@ export const FindFolderByOwnerId: React.FC = () => {
     return <p>No folders found.</p>;
   }
 
-  const updateFolders = useFolderStore((state: any) =>
-    state.updateFolders(data.findFolderByOwnerId)
-  );
-
-  // folderObj.data = data.findFolderByOwnerId;
-
-  const onCreateNewFolder = (folder: Folder) => {
-    console.log("new folder");
-    console.log(folder);
-  };
+  updateFoldersHandler(data.findFolderByOwnerId);
 
   return (
     <Fragment>

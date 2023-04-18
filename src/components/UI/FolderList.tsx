@@ -3,11 +3,10 @@ import { Folder, useFolder, useUpdateFolderOne } from "../../context/Folder";
 import { useNavigate } from "react-router-dom";
 import { CreateFolder } from "./CreateFolder";
 import { useFolderStore } from "../../store/folder";
+import { useSelector } from "react-redux";
 
 export const FolderList: React.FC = () => {
-  // const folders = useFolder();
-
-  const folders = useFolderStore((state: any) => state.folders);
+  const folders = useSelector((state: any) => state.folder.folders);
 
   const updateFolderOne = useUpdateFolderOne({
     id: "",
@@ -24,23 +23,6 @@ export const FolderList: React.FC = () => {
     navigate("/my-folder-idx", { replace: true });
   };
 
-  // TODO: provide more standard  styling for the folders(later)
-  // TODO: make folders clickable (done)
-  // TODO: on folder lead to path "my-folder-idx" (done)
-  // TODO: update folder content in the context on the above click (done)
-  // TODO: rename this component to FolderList (done)
-  // TODO: create another component called "Folder", this component should contain contents updated in the above(done)
-
-  const folderRows = folders.map((folder: any, index: any) => (
-    <tr key={folder.id} onClick={() => updateFolderHandler(folder)}>
-      <td>{index + 1}</td>
-      <td>{folder.name}</td>
-      <td>{folder.ownerId}</td>
-      <td>{folder.createdAt}</td>
-      <td>{folder.updatedAt}</td>
-    </tr>
-  ));
-
   return (
     <Fragment>
       <div>
@@ -54,7 +36,17 @@ export const FolderList: React.FC = () => {
               <th>Updated At</th>
             </tr>
           </thead>
-          <tbody>{folderRows}</tbody>
+          <tbody>
+            {folders.map((folder: any, index: any) => (
+              <tr key={folder.id} onClick={() => updateFolderHandler(folder)}>
+                <td>{index + 1}</td>
+                <td>{folder.name}</td>
+                <td>{folder.ownerId}</td>
+                <td>{folder.createdAt}</td>
+                <td>{folder.updatedAt}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
         {/* <CreateFolder /> */}
       </div>

@@ -11,7 +11,7 @@ export const MyFolders: React.FC = (): JSX.Element => {
   return (
     <Fragment>
       <FindFolderByOwnerId />
-      {/* <FolderList /> */}
+      <FolderList />
     </Fragment>
   );
 };
