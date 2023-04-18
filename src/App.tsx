@@ -8,27 +8,32 @@ import { Home } from "./pages/Home";
 import { MyFolders } from "./pages/MyFolders";
 import { SignUp } from "./pages/SignUp";
 import { SignIn } from "./pages/SignIn";
-import { Auth, useAuth, useAuthenticate } from "./context/Auth";
 import { FolderContent } from "./pages/FolderContent";
 import { SubFolderContent } from "./pages/SubFolderContent";
+import { authenticate } from "./store/actions/auth";
+import { Auth } from "./store/reducers/auth";
+import { useDispatch, useSelector } from "react-redux";
 
 const App: React.FC = (): JSX.Element => {
-  const auth: Auth = useAuth();
+  const auth = useSelector((state: any) => state.auth);
+  console.log("auth");
+  console.log(auth);
   const isLoggedIn: boolean = auth.isLoggedIn;
-  const authenticate = useAuthenticate(auth);
+
+  const dispatch: any = useDispatch();
 
   useEffect(() => {
-    const tryLogin = () => {
-      const data: any = localStorage.getItem("auth");
-      const parsedData: Auth = JSON.parse(data);
-      console.log(parsedData);
+    const tryLogin = async () => {
+      const strAuthData: any = localStorage.getItem("auth");
+      const parsedAuthData: Auth = JSON.parse(strAuthData);
 
-      if (!parsedData) {
+      if (!parsedAuthData) {
         localStorage.clear();
         return <Navigate to="/" />;
       }
 
-      const { user, token, expiresIn, expirationTime, isLoggedIn } = parsedData;
+      const { user, token, expiresIn, expirationTime, isLoggedIn } =
+        parsedAuthData;
       if (!user || !token) {
         localStorage.clear();
         return <Navigate to="/" />;
@@ -43,13 +48,7 @@ const App: React.FC = (): JSX.Element => {
         return <Navigate to="/" />;
       }
 
-      authenticate({
-        user: user,
-        token: token,
-        expiresIn: expiresIn,
-        expirationTime: expirationTime,
-        isLoggedIn: isLoggedIn,
-      });
+      await dispatch(authenticate(parsedAuthData));
     };
     tryLogin();
   }, []);

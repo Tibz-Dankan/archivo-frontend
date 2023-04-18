@@ -1,6 +1,8 @@
 import React, { Fragment, useRef } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { useAuth, useAuthenticate } from "../context/Auth";
+import { Auth } from "../store/reducers/auth";
+import { authenticate } from "../store/actions/auth";
+import { useDispatch } from "react-redux";
 
 const LOGIN = gql`
   mutation ($email: String!, $password: String!) {
@@ -21,19 +23,13 @@ const LOGIN = gql`
 export const SignIn: React.FC = (): JSX.Element => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const auth = useAuth();
-  const authenticate = useAuthenticate(auth);
+  const dispatch: any = useDispatch();
 
   const [logIn, { loading, data, error }] = useMutation(LOGIN);
 
-  const authenticateHandler = (data: any) => {
-    authenticate({
-      user: data.login.user,
-      token: data.login.token,
-      expiresIn: data.login.expiresIn,
-      expirationTime: data.login.expirationTime,
-      isLoggedIn: !!data.login.token,
-    });
+  const authenticateHandler = async (auth: Auth) => {
+    localStorage.setItem("auth", JSON.stringify(auth));
+    await dispatch(authenticate(auth));
   };
 
   const submitHandler = (event: React.FormEvent) => {
@@ -51,7 +47,7 @@ export const SignIn: React.FC = (): JSX.Element => {
       },
     });
     if (data) {
-      authenticateHandler(data);
+      authenticateHandler(data.login);
     }
   };
   return (

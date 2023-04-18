@@ -1,6 +1,8 @@
 import React, { Fragment, useRef } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { useAuth, useAuthenticate } from "../context/Auth";
+import { Auth } from "../store/reducers/auth";
+import { authenticate } from "../store/actions/auth";
+import { useDispatch } from "react-redux";
 
 const SIGNUP = gql`
   mutation ($name: String!, $email: String!, $password: String!) {
@@ -22,19 +24,13 @@ export const SignUp: React.FC = (): JSX.Element => {
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
-  const auth = useAuth();
-  const authenticate = useAuthenticate(auth);
+  const dispatch: any = useDispatch();
 
   const [signUp, { loading, data, error }] = useMutation(SIGNUP);
 
-  const authenticateHandler = (data: any) => {
-    authenticate({
-      user: data.signup.user,
-      token: data.signup.token,
-      expiresIn: data.signup.expiresIn,
-      expirationTime: data.signup.expirationTime,
-      isLoggedIn: !!data.signup.token,
-    });
+  const authenticateHandler = async (auth: Auth) => {
+    localStorage.setItem("auth", JSON.stringify(auth));
+    await dispatch(authenticate(auth));
   };
 
   const submitHandler = (event: React.FormEvent) => {
@@ -54,7 +50,7 @@ export const SignUp: React.FC = (): JSX.Element => {
       },
     });
     if (data) {
-      authenticateHandler(data);
+      authenticateHandler(data.signup);
     }
   };
   return (
