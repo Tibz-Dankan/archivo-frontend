@@ -75,8 +75,8 @@ export const FindFolderByOwnerId: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {folderObj.data.map((folder, index) => (
-              <tr key={folder.id} onClick={() => updateFolderHandler(folder)}>
+            {folders.map((folder: Folder, index: number) => (
+              <tr key={folder.id}>
                 <td>{index + 1}</td>
                 <td>{folder.name}</td>
                 <td>{folder.ownerId}</td>

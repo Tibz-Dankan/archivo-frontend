@@ -1,11 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { useAuth, Auth } from "../../context/Auth";
-import { Folder, useAddFolder } from "../../context/Folder";
-
-interface Props {
-  new: (folder: Folder) => void;
-}
+import { Folder } from "../../context/Folder";
+import { addNewFolder } from "../../store/actions/folder";
+import { useDispatch, useSelector } from "react-redux";
 
 const CREATE_FOLDER = gql`
   mutation ($ownerId: String!, $name: String!) {
@@ -19,31 +16,16 @@ const CREATE_FOLDER = gql`
   }
 `;
 
-export const CreateFolder: React.FC<Props> = (props) => {
+export const CreateFolder: React.FC = () => {
   const [createFolder, { loading, error, data }] = useMutation(CREATE_FOLDER);
   const nameRef = useRef<HTMLInputElement>(null);
 
-  const auth: Auth = useAuth();
-  const userId: string = auth.user.id;
-  console.log("userId");
-  console.log(userId);
+  const userId: string = useSelector((state: any) => state.auth.user.id);
 
-  const addFolder = useAddFolder({
-    id: "",
-    name: "",
-    ownerId: "",
-    createdAt: "",
-    updatedAt: "",
-  });
+  const dispatch: any = useDispatch();
 
-  const addFolderHandler = (payload: Folder) => {
-    console.log("payload");
-    console.log(payload);
-    addFolder(payload);
-  };
-
-  const newFolderHandler = (folder: Folder) => {
-    props.new(folder);
+  const addFolderHandler = async (folder: Folder) => {
+    await dispatch(addNewFolder(folder));
   };
 
   const createFolderHandler = async (event: React.FormEvent) => {
@@ -63,12 +45,13 @@ export const CreateFolder: React.FC<Props> = (props) => {
   };
 
   useEffect(() => {
-    const saveNewFolder = () => {
-      if (data) {
-        newFolderHandler(data.createFolder);
+    const addNewFolder = () => {
+      if (data?.createFolder) {
+        addFolderHandler(data.createFolder);
+        data.createFolder = null;
       }
     };
-    saveNewFolder();
+    addNewFolder();
   }, [data]);
 
   return (
