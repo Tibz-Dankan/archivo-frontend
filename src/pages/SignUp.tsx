@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from "react";
+import React, { Fragment, useRef, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { Auth } from "../store/reducers/auth";
 import { authenticate } from "../store/actions/auth";
@@ -49,10 +49,14 @@ export const SignUp: React.FC = (): JSX.Element => {
         password: password,
       },
     });
-    if (data) {
-      authenticateHandler(data.signup);
-    }
   };
+
+  useEffect(() => {
+    if (data?.login) {
+      authenticateHandler(data.login);
+    }
+  }, [data]);
+
   return (
     <Fragment>
       <div>
