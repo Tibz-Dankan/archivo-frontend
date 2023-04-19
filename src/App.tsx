@@ -51,7 +51,7 @@ const App: React.FC = (): JSX.Element => {
       await dispatch(authenticate(parsedAuthData));
     };
     tryLogin();
-  }, []);
+  }, [dispatch]);
 
   const nonAuthRouter = createBrowserRouter([
     {
