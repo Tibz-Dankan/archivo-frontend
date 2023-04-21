@@ -22,7 +22,7 @@ export const SubFolderList: React.FC = () => {
 
   const subFolderUpdateHandler = (payload: SubFolder) => {
     updateFolderOne(payload);
-    navigate("/my-sub-folder-idx");
+    navigate(`/my-sub-folder-idx/${payload.id}`);
   };
 
   return (

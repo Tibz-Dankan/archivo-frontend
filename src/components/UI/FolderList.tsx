@@ -20,7 +20,7 @@ export const FolderList: React.FC = () => {
 
   const updateFolderHandler = (payload: Folder) => {
     updateFolderOne(payload);
-    navigate("/my-folder-idx", { replace: true });
+    navigate(`/my-folder-idx/${payload.id}`, { replace: true });
   };
 
   return (

@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
 import { useUpdateSubFolder } from "../../context/SubFolder";
+import { useParams } from "react-router-dom";
 
 interface SubFolder {
   id: string;
@@ -34,7 +35,9 @@ export const FindSubFolderByParentId: React.FC<props> = (
   props
 ): JSX.Element => {
   const updateSubFolders = useUpdateSubFolder([]);
-  const parentId = props.parentId;
+  const { id } = useParams();
+  // const parentId = props.parentId;
+  const parentId = id;
 
   const { loading, error, data } = useQuery<QueryData>(FIND_SUBFOLDERS_QUERY, {
     variables: { parentId },

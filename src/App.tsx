@@ -86,11 +86,11 @@ const App: React.FC = (): JSX.Element => {
       element: <MyFolders />,
     },
     {
-      path: "/my-folder-idx",
+      path: "/my-folder-idx/:id",
       element: <FolderContent />,
     },
     {
-      path: "/my-sub-folder-idx",
+      path: "/my-sub-folder-idx/:id",
       element: <SubFolderContent />,
     },
     {
