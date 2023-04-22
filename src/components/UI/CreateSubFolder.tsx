@@ -1,7 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { useAuth, Auth } from "../../context/Auth";
-import { SubFolder, useAddSubFolder } from "../../context/SubFolder";
+import { addNewFolder } from "../../store/actions/folder";
+import { Folder } from "../../store/reducers/folder";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 interface props {
   parentId: string;
@@ -23,47 +25,46 @@ const CREATE_SUB_FOLDER = gql`
 export const CreateSubFolder: React.FC<props> = (props) => {
   const [createSubFolder, { loading, error, data }] =
     useMutation(CREATE_SUB_FOLDER);
-  const nameRef = useRef<HTMLInputElement>(null);
+  const [folderName, setFolderName] = useState("");
+  const userId = useSelector((state: any) => state.auth.user.id);
 
-  const auth: Auth = useAuth();
-  const userId: string = auth.user.id;
-  console.log("userId");
-  console.log(userId);
+  const { id } = useParams();
+  const parentId = id;
+  const dispatch: any = useDispatch();
 
-  const addSubFolder = useAddSubFolder({
-    id: "",
-    name: "",
-    ownerId: "",
-    createdAt: "",
-    updatedAt: "",
-  });
+  const addNewFolderHandler = async (folders: Folder) => {
+    await dispatch(addNewFolder(folders));
+  };
 
-  const addSubFolderHandler = (payload: SubFolder) => {
-    console.log("payload");
-    console.log(payload);
-    addSubFolder(payload);
+  const folderNameChangeHandler = (event: any) => {
+    setFolderName(event.target.value);
   };
 
   const createSubFolderHandler = async (event: React.FormEvent) => {
     event.preventDefault();
-    const name = nameRef.current?.value;
-    const parentId = props.parentId;
-    if (!name || !userId || !parentId) return;
+    if (!folderName || !userId || !parentId) return;
     try {
       await createSubFolder({
         variables: {
           ownerId: userId,
-          name: name,
+          name: folderName,
           parentId: parentId,
         },
       });
-      if (data) {
-        addSubFolderHandler(data);
-      }
+      setFolderName("");
     } catch (err) {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    const addNewFolder = () => {
+      if (data?.createSubFolder) {
+        addNewFolderHandler(data.createSubFolder);
+      }
+    };
+    addNewFolder();
+  }, [data]);
 
   return (
     <form onSubmit={(event) => createSubFolderHandler(event)}>
@@ -71,7 +72,8 @@ export const CreateSubFolder: React.FC<props> = (props) => {
       {error && <p>{error.message}</p>}
       <input
         type="text"
-        ref={nameRef}
+        value={folderName}
+        onChange={(event) => folderNameChangeHandler(event)}
         placeholder="Enter sub folder name"
         required
       />
