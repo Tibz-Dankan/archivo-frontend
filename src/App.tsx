@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import React, { Fragment } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 // import "./App.css";
 import { Home } from "./pages/Home";
@@ -104,83 +103,6 @@ const App: React.FC = (): JSX.Element => {
       {!isLoggedIn && <RouterProvider router={nonAuthRouter} />}
       {isLoggedIn && <RouterProvider router={authRouter} />}
     </div>
-    // <div>
-    //   <BrowserRouter>
-    //     {!isLoggedIn && (
-    //       <Routes>
-    //         <Fragment>
-    //           <Route
-    //             path="/"
-    //             element={
-    //               <div>
-    //                 <Home />
-    //               </div>
-    //             }
-    //           />
-    //           <Route
-    //             path="signin"
-    //             element={
-    //               <div>
-    //                 <SignIn />
-    //               </div>
-    //             }
-    //           />
-    //           <Route
-    //             path="signup"
-    //             element={
-    //               <div>
-    //                 <SignUp />
-    //               </div>
-    //             }
-    //           />
-    //           <Route
-    //             path="register"
-    //             element={<Navigate to="/signup" replace />}
-    //           />
-    //           <Route path="login" element={<Navigate to="/signin" replace />} />
-    //           <Route path="*" element={<Navigate to="/" replace />} />
-    //         </Fragment>
-    //       </Routes>
-    //     )}
-
-    //     {isLoggedIn && (
-    //       <Fragment>
-    //         <div className="pages">
-    //           <Routes>
-    //             <Route
-    //               path="/my-folders"
-    //               element={
-    //                 <div className="pages__component">
-    //                   <MyFolders />
-    //                 </div>
-    //               }
-    //             />
-    //             <Route
-    //               path="/my-folder-idx"
-    //               element={
-    //                 <div className="pages__component">
-    //                   <FolderContent />
-    //                 </div>
-    //               }
-    //             />
-    //             <Route
-    //               path="/my-sub-folder-idx"
-    //               element={
-    //                 <div className="pages__component">
-    //                   <SubFolderContent />
-    //                 </div>
-    //               }
-    //             />
-    //             <Route
-    //               path="*"
-    //               element={<Navigate to="/my-folders" replace />}
-    //             />
-    //           </Routes>
-    //         </div>
-    //       </Fragment>
-    //     )}
-    //   </BrowserRouter>
-    // </div>
   );
 };
 
