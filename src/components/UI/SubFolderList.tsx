@@ -1,38 +1,30 @@
 import React, { Fragment } from "react";
-import { SubFolder, useSubFolder } from "../../context/SubFolder";
-import { useUpdateFolderOne } from "../../context/Folder";
 import { useNavigate } from "react-router-dom";
 import { CreateSubFolder } from "./CreateSubFolder";
-import { useFolderOne } from "../../context/Folder";
+import { updateParentFolder } from "../../store/actions/folder";
+import { Folder } from "../../store/folder";
+import { useDispatch, useSelector } from "react-redux";
 
 export const SubFolderList: React.FC = () => {
-  const subFolders = useSubFolder();
-  const parentFolder = useFolderOne();
-  //TODO: provide more styling for the subfolder
-
-  const updateFolderOne = useUpdateFolderOne({
-    id: "",
-    ownerId: "",
-    name: "",
-    createdAt: "",
-    updatedAt: "",
-  });
+  const subFolders = useSelector((state: any) => state.folder.folders);
+  const parentFolder = useSelector((state: any) => state.folder.parentFolder);
 
   const navigate = useNavigate();
+  const dispatch: any = useDispatch();
 
-  const subFolderUpdateHandler = (payload: SubFolder) => {
-    updateFolderOne(payload);
-    navigate(`/my-sub-folder-idx/${payload.id}`);
+  const updateParentFolderHandler = (folder: Folder) => {
+    dispatch(updateParentFolder(folder));
+    navigate(`/my-sub-folder-idx/${folder.id}`);
   };
 
   return (
     <Fragment>
       <div>
         <ul>
-          {subFolders.map((subFolder) => (
+          {subFolders.map((subFolder: Folder) => (
             <li
               key={subFolder.id}
-              onClick={() => subFolderUpdateHandler(subFolder)}
+              onClick={() => updateParentFolderHandler(subFolder)}
             >
               <span>{subFolder.name}</span>
               <span>{subFolder.createdAt}</span>

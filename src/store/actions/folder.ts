@@ -14,6 +14,12 @@ export const addNewFolder = (folder: Folder) => {
   };
 };
 
+export const updateParentFolder = (folder: Folder) => {
+  return async (dispatch: any) => {
+    await dispatch(folderActions.updateParent({ parentFolder: folder }));
+  };
+};
+
 export const clearAllFolders = () => {
   return async (dispatch: any) => {
     await dispatch(folderActions.clear());

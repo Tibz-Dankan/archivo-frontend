@@ -9,6 +9,7 @@ export interface Folder {
 }
 
 interface FolderArr {
+  parentFolder: Folder;
   newFolder: Folder;
   folders: Folder[];
 }
@@ -21,7 +22,17 @@ const folderOneInitialState: Folder = {
   updatedAt: "",
 };
 
+interface ParentFolder {
+  parentFolder: Folder;
+}
+
+export interface ParentFolderAction {
+  payload: ParentFolder;
+  type: string;
+}
+
 const initialState: FolderArr = {
+  parentFolder: folderOneInitialState,
   newFolder: folderOneInitialState,
   folders: [],
 };
@@ -38,8 +49,13 @@ export const folderSlice = createSlice({
       state.folders = [...state.folders, action.payload.newFolder];
       return;
     },
+    updateParent(state, action: ParentFolderAction) {
+      state.parentFolder = action.payload.parentFolder;
+      return;
+    },
     clear(state) {
       state.folders = [];
+      state.parentFolder = folderOneInitialState;
       state.newFolder = folderOneInitialState;
     },
   },
