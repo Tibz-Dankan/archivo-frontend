@@ -10,7 +10,7 @@ export const updateFolders = (folders: Folder[]) => {
 
 export const addNewFolder = (folder: Folder) => {
   return async (dispatch: any) => {
-    await dispatch(folderActions.addOne({ newFolder: folder }));
+    await dispatch(folderActions.addNew({ newFolder: folder }));
   };
 };
 

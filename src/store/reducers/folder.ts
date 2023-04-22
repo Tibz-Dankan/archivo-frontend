@@ -31,6 +31,15 @@ export interface ParentFolderAction {
   type: string;
 }
 
+interface NewFolder {
+  newFolder: Folder;
+}
+
+export interface NewFolderAction {
+  payload: NewFolder;
+  type: string;
+}
+
 const initialState: FolderArr = {
   parentFolder: folderOneInitialState,
   newFolder: folderOneInitialState,
@@ -45,7 +54,7 @@ export const folderSlice = createSlice({
       state.folders = action.payload.folders;
       return;
     },
-    addOne(state, action) {
+    addNew(state, action: NewFolderAction) {
       state.folders = [...state.folders, action.payload.newFolder];
       return;
     },
