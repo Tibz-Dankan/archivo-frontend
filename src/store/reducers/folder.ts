@@ -8,10 +8,14 @@ export interface Folder {
   updatedAt: string;
 }
 
-interface FolderArr {
+interface FolderHandler {
   parentFolder: Folder;
   newFolder: Folder;
   folders: Folder[];
+}
+
+export interface FolderState {
+  folder: FolderHandler;
 }
 
 const folderOneInitialState: Folder = {
@@ -40,7 +44,7 @@ export interface NewFolderAction {
   type: string;
 }
 
-const initialState: FolderArr = {
+const initialState: FolderHandler = {
   parentFolder: folderOneInitialState,
   newFolder: folderOneInitialState,
   folders: [],
