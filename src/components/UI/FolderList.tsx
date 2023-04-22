@@ -1,26 +1,19 @@
 import React, { Fragment } from "react";
-import { Folder, useFolder, useUpdateFolderOne } from "../../context/Folder";
 import { useNavigate } from "react-router-dom";
 import { CreateFolder } from "./CreateFolder";
-import { useFolderStore } from "../../store/folder";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Folder, FolderState } from "../../store/reducers/folder";
+import { updateParentFolder } from "../../store/actions/folder";
 
 export const FolderList: React.FC = () => {
-  const folders = useSelector((state: any) => state.folder.folders);
-
-  const updateFolderOne = useUpdateFolderOne({
-    id: "",
-    ownerId: "",
-    name: "",
-    createdAt: "",
-    updatedAt: "",
-  });
+  const folders = useSelector((state: FolderState) => state.folder.folders);
 
   const navigate = useNavigate();
+  const dispatch: any = useDispatch();
 
-  const updateFolderHandler = (payload: Folder) => {
-    updateFolderOne(payload);
-    navigate(`/my-folder-idx/${payload.id}`, { replace: true });
+  const updateParentFolderHandler = (folder: Folder) => {
+    dispatch(updateParentFolder(folder));
+    navigate(`/my-sub-folder-idx/${folder.id}`);
   };
 
   return (
@@ -37,8 +30,11 @@ export const FolderList: React.FC = () => {
             </tr>
           </thead>
           <tbody>
-            {folders.map((folder: any, index: any) => (
-              <tr key={folder.id} onClick={() => updateFolderHandler(folder)}>
+            {folders.map((folder: Folder, index: number) => (
+              <tr
+                key={folder.id}
+                onClick={() => updateParentFolderHandler(folder)}
+              >
                 <td>{index + 1}</td>
                 <td>{folder.name}</td>
                 <td>{folder.ownerId}</td>

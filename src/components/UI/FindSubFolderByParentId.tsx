@@ -1,7 +1,9 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
-import { useUpdateSubFolder } from "../../context/SubFolder";
 import { useParams } from "react-router-dom";
+import { updateFolders } from "../../store/actions/folder";
+import { Folder } from "../../store/reducers/folder";
+import { useDispatch } from "react-redux";
 
 interface SubFolder {
   id: string;
@@ -34,10 +36,14 @@ const FIND_SUBFOLDERS_QUERY = gql`
 export const FindSubFolderByParentId: React.FC<props> = (
   props
 ): JSX.Element => {
-  const updateSubFolders = useUpdateSubFolder([]);
   const { id } = useParams();
-  // const parentId = props.parentId;
   const parentId = id;
+
+  const dispatch: any = useDispatch();
+
+  const updateFoldersHandler = async (folders: Folder[]) => {
+    await dispatch(updateFolders(folders));
+  };
 
   const { loading, error, data } = useQuery<QueryData>(FIND_SUBFOLDERS_QUERY, {
     variables: { parentId },
@@ -47,8 +53,7 @@ export const FindSubFolderByParentId: React.FC<props> = (
   if (error) return <p>Error: {error.message}</p>;
   if (!data) return <p>No data found.</p>;
 
-  //   update subfolders in context
-  updateSubFolders(data.findSubFolderByParentId);
+  updateFoldersHandler(data.findSubFolderByParentId);
 
   return <p>Sub Folders</p>;
 };
