@@ -13,7 +13,7 @@ interface Folder {
   updatedAt: string;
 }
 
-interface FindFolderByOwnerIdQueryResult {
+interface QueryResult {
   findFolderByOwnerId: Folder[];
 }
 
@@ -39,7 +39,7 @@ export const FindFolderByOwnerId: React.FC = () => {
     await dispatch(updateFolders(folders));
   };
 
-  const { loading, error, data } = useQuery<FindFolderByOwnerIdQueryResult>(
+  const { loading, error, data } = useQuery<QueryResult>(
     FIND_FOLDER_BY_OWNER_ID,
     {
       variables: { ownerId },
