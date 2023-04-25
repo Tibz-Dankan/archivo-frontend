@@ -1,16 +1,8 @@
 import React from "react";
 import { useQuery, gql } from "@apollo/client";
-import { useUpdateFile } from "../../context/File";
-
-export interface File {
-  id: string;
-  ownerId: string;
-  name: string;
-  url: string;
-  systemName: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { File } from "../../store/reducers/file";
+import { updateFiles } from "../../store/actions/file";
+import { useDispatch } from "react-redux";
 
 interface QueryData {
   findFileByFolderId: File[];
@@ -34,8 +26,12 @@ const FIND_FILES_QUERY = gql`
 `;
 
 export const FindFileByFolderId: React.FC<props> = (props): JSX.Element => {
-  const updateFiles = useUpdateFile([]);
   const folderId = props.parentId;
+  const dispatch: any = useDispatch();
+
+  const updateFilesHandler = async (files: File[]) => {
+    await dispatch(updateFiles(files));
+  };
 
   const { loading, error, data } = useQuery<QueryData>(FIND_FILES_QUERY, {
     variables: { folderId },
@@ -45,7 +41,7 @@ export const FindFileByFolderId: React.FC<props> = (props): JSX.Element => {
   if (error) return <p>Error: {error.message}</p>;
   if (!data) return <p>No data found.</p>;
 
-  updateFiles(data.findFileByFolderId);
+  updateFilesHandler(data.findFileByFolderId);
 
   return <p>Files In Folder</p>;
 };
