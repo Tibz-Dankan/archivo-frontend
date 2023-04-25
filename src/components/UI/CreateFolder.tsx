@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
-import { Folder } from "../../context/Folder";
+import { Folder } from "../../store/reducers/folder";
 import { addNewFolder } from "../../store/actions/folder";
 import { useDispatch, useSelector } from "react-redux";
 
