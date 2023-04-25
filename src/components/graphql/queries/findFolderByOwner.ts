@@ -1,17 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
 
-// interface Folder {
-//   id: string;
-//   name: string;
-//   ownerId: string;
-//   createdAt: string;
-//   updatedAt: string;
-// }
-
-// interface QueryResult {
-//   findFolderByOwnerId: Folder[];
-// }
-
 const FIND_FOLDER_BY_OWNER_ID = gql`
   query findFolderByOwnerId($ownerId: ID!) {
     findFolderByOwnerId(id: $ownerId) {
