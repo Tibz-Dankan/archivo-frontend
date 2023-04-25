@@ -15,6 +15,15 @@ export interface Auth {
   isLoggedIn: boolean;
 }
 
+export interface AuthState {
+  auth: Auth;
+}
+
+interface AuthenticateActions {
+  payload: Auth;
+  type: string;
+}
+
 const initialState: Auth = {
   user: { username: "", email: "", id: "", imageUrl: "" },
   token: "",
@@ -27,7 +36,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState: initialState,
   reducers: {
-    authenticate(state, action) {
+    authenticate(state, action: AuthenticateActions) {
       state.token = action.payload.token;
       state.isLoggedIn = !!state.token;
       state.user = action.payload.user;

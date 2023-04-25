@@ -3,6 +3,7 @@ import { gql, useMutation } from "@apollo/client";
 import { Folder } from "../../store/reducers/folder";
 import { addNewFolder } from "../../store/actions/folder";
 import { useDispatch, useSelector } from "react-redux";
+import { AuthState } from "../../store/reducers/auth";
 
 const CREATE_FOLDER = gql`
   mutation ($ownerId: String!, $name: String!) {
@@ -20,7 +21,7 @@ export const CreateFolder: React.FC = () => {
   const [createFolder, { loading, error, data }] = useMutation(CREATE_FOLDER);
   const nameRef = useRef<HTMLInputElement>(null);
 
-  const userId: string = useSelector((state: any) => state.auth.user.id);
+  const userId: string = useSelector((state: AuthState) => state.auth.user.id);
 
   const dispatch: any = useDispatch();
 
