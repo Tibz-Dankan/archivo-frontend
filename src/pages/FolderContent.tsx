@@ -1,12 +1,13 @@
 import React, { Fragment } from "react";
-import { useFolderOne } from "../context/Folder";
+import { useSelector } from "react-redux";
+import { FolderState } from "../store/reducers/folder";
 import { FindFileByFolderId } from "../components/UI/FindFileByFolderId";
 import { FindSubFolderByParentId } from "../components/UI/FindSubFolderByParentId";
 import { FileList } from "../components/UI/FileList";
 import { SubFolderList } from "../components/UI/SubFolderList";
 
 export const FolderContent: React.FC = () => {
-  const folder = useFolderOne();
+  const folder = useSelector((state: FolderState) => state.folder.parentFolder);
 
   console.log("folder");
   console.log(folder);
