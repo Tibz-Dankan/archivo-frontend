@@ -5,16 +5,8 @@ import { updateFolders } from "../../store/actions/folder";
 import { Folder } from "../../store/reducers/folder";
 import { useDispatch } from "react-redux";
 
-interface SubFolder {
-  id: string;
-  name: string;
-  ownerId: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 interface QueryData {
-  findSubFolderByParentId: SubFolder[];
+  findSubFolderByParentId: Folder[];
 }
 
 interface props {

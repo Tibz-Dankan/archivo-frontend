@@ -26,6 +26,15 @@ const folderOneInitialState: Folder = {
   updatedAt: "",
 };
 
+interface FolderList {
+  folders: Folder[];
+}
+
+export interface UpdateFoldersAction {
+  payload: FolderList;
+  type: string;
+}
+
 interface ParentFolder {
   parentFolder: Folder;
 }
@@ -54,7 +63,7 @@ export const folderSlice = createSlice({
   name: "folder",
   initialState: initialState,
   reducers: {
-    update(state, action) {
+    update(state, action: UpdateFoldersAction) {
       state.folders = action.payload.folders;
       return;
     },

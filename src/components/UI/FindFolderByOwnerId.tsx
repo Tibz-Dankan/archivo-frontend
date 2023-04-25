@@ -4,14 +4,7 @@ import { Auth } from "../../store/reducers/auth";
 import { useDispatch } from "react-redux";
 import { updateFolders } from "../../store/actions/folder";
 import { useSelector } from "react-redux";
-
-interface Folder {
-  id: string;
-  name: string;
-  ownerId: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { Folder } from "../../store/reducers/folder";
 
 interface QueryResult {
   findFolderByOwnerId: Folder[];
