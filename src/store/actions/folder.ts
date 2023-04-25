@@ -1,6 +1,6 @@
 import { folderActions } from "../index";
 
-import { Folder } from "../folder";
+import { Folder } from "../reducers/folder";
 
 export const updateFolders = (folders: Folder[]) => {
   return async (dispatch: any) => {
