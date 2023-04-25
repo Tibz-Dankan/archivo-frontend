@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { gql, useQuery } from "@apollo/client";
-import { useAuth, Auth } from "../../context/Auth";
+import { Auth } from "../../store/reducers/auth";
 import { useDispatch } from "react-redux";
 import { updateFolders } from "../../store/actions/folder";
 import { useSelector } from "react-redux";
