@@ -3,6 +3,7 @@ import { gql, useMutation } from "@apollo/client";
 import { Auth } from "../store/reducers/auth";
 import { authenticate } from "../store/actions/auth";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const SIGNUP = gql`
   mutation ($name: String!, $email: String!, $password: String!) {
@@ -25,12 +26,14 @@ export const SignUp: React.FC = (): JSX.Element => {
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const dispatch: any = useDispatch();
+  const navigate = useNavigate();
 
   const [signUp, { loading, data, error }] = useMutation(SIGNUP);
 
   const authenticateHandler = async (auth: Auth) => {
     localStorage.setItem("auth", JSON.stringify(auth));
     await dispatch(authenticate(auth));
+    navigate("/my-folders", { replace: true });
   };
 
   const submitHandler = (event: React.FormEvent) => {
@@ -52,8 +55,8 @@ export const SignUp: React.FC = (): JSX.Element => {
   };
 
   useEffect(() => {
-    if (data?.login) {
-      authenticateHandler(data.login);
+    if (data?.signup) {
+      authenticateHandler(data.signup);
     }
   }, [data]);
 
