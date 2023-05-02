@@ -13,7 +13,7 @@ export const FolderList: React.FC = () => {
 
   const updateParentFolderHandler = (folder: Folder) => {
     dispatch(updateParentFolder(folder));
-    navigate(`/my-sub-folder-idx/${folder.id}`);
+    navigate(`/my-folder-idx/${folder.id}`);
   };
 
   return (

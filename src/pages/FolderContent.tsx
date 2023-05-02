@@ -17,7 +17,7 @@ export const FolderContent: React.FC = () => {
       <div>
         <FindFileByFolderId parentId={folder.id} />
         <FindSubFolderByParentId parentId={folder.id} />
-        <FileList />
+        <FileList isSubFolder={false} />
         <SubFolderList />
       </div>
     </Fragment>

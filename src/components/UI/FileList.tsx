@@ -3,7 +3,11 @@ import { useSelector } from "react-redux";
 import { FileState } from "../../store/reducers/file";
 import { AddFile } from "./AddFile";
 
-export const FileList: React.FC = () => {
+interface FileProps {
+  isSubFolder: boolean;
+}
+
+export const FileList: React.FC<FileProps> = (props) => {
   const files = useSelector((state: FileState) => state.file.files);
 
   return (
@@ -18,7 +22,7 @@ export const FileList: React.FC = () => {
             </li>
           ))}
         </ul>
-        <AddFile />
+        <AddFile isSubFolder={props.isSubFolder} />
       </div>
     </Fragment>
   );
