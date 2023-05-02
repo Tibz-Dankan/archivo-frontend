@@ -19,7 +19,7 @@ export const SubFolderContent: React.FC = (): JSX.Element => {
       <div>
         <FindFileBySubFolderId parentId={subFolder.id} />
         <FindSubFolderByParentId parentId={subFolder.id} />
-        <FileList />
+        <FileList isSubFolder={true} />
         <SubFolderList />
       </div>
     </Fragment>

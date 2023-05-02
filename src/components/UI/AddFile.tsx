@@ -4,21 +4,43 @@ import { FilePicker } from "./FilePicker";
 import { addNewFile } from "../../store/actions/file";
 import { useDispatch } from "react-redux";
 import { File } from "../../store/reducers/file";
+import { useParams } from "react-router-dom";
 
 const ADD_FILE = gql`
-  mutation ($file: Upload!, $path: String!) {
-    singleUpload(file: $file, path: $path) {
+  mutation (
+    $file: Upload!
+    $path: String!
+    $folderId: String!
+    $subFolderId: String!
+  ) {
+    singleUpload(
+      file: $file
+      path: $path
+      folderId: $folderId
+      subFolderId: $subFolderId
+    ) {
       filename
       path
+      folderId
+      subFolderId
     }
   }
 `;
 
-export const AddFile: React.FC = (): JSX.Element => {
+interface AddFileProps {
+  isSubFolder: boolean;
+}
+
+export const AddFile: React.FC<AddFileProps> = (props): JSX.Element => {
   const [addFile, { error, loading, data }] = useMutation(ADD_FILE);
 
   const [file, setFile] = useState(null);
   const dispatch: any = useDispatch();
+  let subFolderId: string = "";
+  let folderId: string = "";
+
+  const { id } = useParams();
+  const parentId = id!;
 
   const onSelectHandler = (file: any) => {
     setFile(file);
@@ -32,8 +54,23 @@ export const AddFile: React.FC = (): JSX.Element => {
 
   const addFileHandler = () => {
     if (!file) return;
-    addFile({ variables: { file: file, path: "Testing" } });
+    addFile({
+      variables: {
+        file: file,
+        path: "Testing",
+        folderId: folderId,
+        subFolderId: subFolderId,
+      },
+    });
   };
+
+  useEffect(() => {
+    if (props.isSubFolder) {
+      subFolderId = parentId;
+    } else {
+      folderId = parentId;
+    }
+  }, [file]);
 
   useEffect(() => {
     const tryAddNewFile = () => {
