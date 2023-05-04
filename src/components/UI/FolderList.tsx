@@ -4,6 +4,7 @@ import { CreateFolder } from "./CreateFolder";
 import { useDispatch, useSelector } from "react-redux";
 import { Folder, FolderState } from "../../store/reducers/folder";
 import { updateParentFolder } from "../../store/actions/folder";
+import { addToPath } from "../../store/actions/path";
 
 export const FolderList: React.FC = () => {
   const folders = useSelector((state: FolderState) => state.folder.folders);
@@ -13,6 +14,7 @@ export const FolderList: React.FC = () => {
 
   const updateParentFolderHandler = (folder: Folder) => {
     dispatch(updateParentFolder(folder));
+    dispatch(addToPath(folder));
     navigate(`/my-folder-idx/${folder.id}`);
   };
 

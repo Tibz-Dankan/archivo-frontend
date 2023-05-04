@@ -4,6 +4,7 @@ import { CreateSubFolder } from "./CreateSubFolder";
 import { updateParentFolder } from "../../store/actions/folder";
 import { Folder, FolderState } from "../../store/reducers/folder";
 import { useDispatch, useSelector } from "react-redux";
+import { addToPath } from "../../store/actions/path";
 
 export const SubFolderList: React.FC = () => {
   const subFolders = useSelector((state: FolderState) => state.folder.folders);
@@ -16,6 +17,7 @@ export const SubFolderList: React.FC = () => {
 
   const updateParentFolderHandler = (folder: Folder) => {
     dispatch(updateParentFolder(folder));
+    dispatch(addToPath(folder));
     navigate(`/my-sub-folder-idx/${folder.id}`);
   };
 
