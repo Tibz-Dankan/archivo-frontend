@@ -11,8 +11,8 @@ export const SubFolderContent: React.FC = (): JSX.Element => {
     (state: FolderState) => state.folder.parentFolder
   );
 
-  console.log("subFolder");
-  console.log(subFolder);
+  // console.log("subFolder");
+  // console.log(subFolder);
 
   return (
     <Fragment>

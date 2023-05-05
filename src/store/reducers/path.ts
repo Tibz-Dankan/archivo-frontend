@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Folder } from "./folder";
 
-interface PathState {
+interface Path {
   path: Folder[];
 }
 
@@ -19,7 +19,11 @@ interface RemoveFolderAction {
   type: string;
 }
 
-const initialPathState: PathState = {
+export interface PathState {
+  path: Path;
+}
+
+const initialPathState: Path = {
   path: [],
 };
 
@@ -31,9 +35,7 @@ export const pathSlice = createSlice({
       state.path.push(action.payload.folder);
     },
     removeFolder: (state, action: RemoveFolderAction) => {
-      state.path = state.path.filter(
-        (folder) => folder.id !== action.payload.folder.id
-      );
+      state.path.pop();
     },
     clear: (state) => {
       state.path = [];
