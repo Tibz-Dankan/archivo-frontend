@@ -7,6 +7,7 @@ import { File } from "../../store/reducers/file";
 import { useParams } from "react-router-dom";
 import { PathState } from "../../store/reducers/path";
 import { generatePath } from "../../utils/pathGenerator";
+import { AuthState } from "../../store/reducers/auth";
 
 const ADD_FILE = gql`
   mutation (
@@ -14,17 +15,22 @@ const ADD_FILE = gql`
     $path: String!
     $folderId: String!
     $subFolderId: String!
+    $ownerId: String!
   ) {
     singleUpload(
       file: $file
       path: $path
       folderId: $folderId
       subFolderId: $subFolderId
+      ownerId: $ownerId
     ) {
-      filename
-      path
-      folderId
-      subFolderId
+      id
+      ownerId
+      name
+      systemName
+      url
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -52,9 +58,10 @@ export const AddFile: React.FC<AddFileProps> = (props): JSX.Element => {
     await dispatch(addNewFile(file));
   };
 
-  // TODO: dynamically add file path basing file's folder nesting
   const pathArray = useSelector((state: PathState) => state.path.path);
   const path = generatePath(pathArray);
+
+  const ownerId = useSelector((state: AuthState) => state.auth.user.id);
 
   const addFileHandler = () => {
     if (!file || !path) return;
@@ -64,6 +71,7 @@ export const AddFile: React.FC<AddFileProps> = (props): JSX.Element => {
         path: path,
         folderId: folderId,
         subFolderId: subFolderId,
+        ownerId: ownerId,
       },
     });
   };
@@ -78,8 +86,8 @@ export const AddFile: React.FC<AddFileProps> = (props): JSX.Element => {
 
   useEffect(() => {
     const tryAddNewFile = () => {
-      if (data?.addFile) {
-        addNewFileHandler(data.addFile);
+      if (data?.singleUpload) {
+        addNewFileHandler(data.singleUpload);
       }
     };
     tryAddNewFile();
