@@ -88,6 +88,7 @@ export const AddFile: React.FC<AddFileProps> = (props): JSX.Element => {
     const tryAddNewFile = () => {
       if (data?.singleUpload) {
         addNewFileHandler(data.singleUpload);
+        setFile(null);
       }
     };
     tryAddNewFile();
