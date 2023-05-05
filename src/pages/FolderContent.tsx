@@ -9,8 +9,8 @@ import { SubFolderList } from "../components/UI/SubFolderList";
 export const FolderContent: React.FC = () => {
   const folder = useSelector((state: FolderState) => state.folder.parentFolder);
 
-  console.log("folder");
-  console.log(folder);
+  // console.log("folder");
+  // console.log(folder);
 
   return (
     <Fragment>

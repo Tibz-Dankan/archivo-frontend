@@ -12,14 +12,30 @@ import { SubFolderContent } from "./pages/SubFolderContent";
 import { authenticate } from "./store/actions/auth";
 import { Auth } from "./store/reducers/auth";
 import { useDispatch, useSelector } from "react-redux";
+import { FolderState } from "./store/reducers/folder";
+import { removeFromPath } from "./store/actions/path";
 
 const App: React.FC = (): JSX.Element => {
   const auth = useSelector((state: any) => state.auth);
-  console.log("auth");
-  console.log(auth);
   const isLoggedIn: boolean = auth.isLoggedIn;
 
+  const parentFolder = useSelector(
+    (state: FolderState) => state.folder.parentFolder
+  );
+
   const dispatch: any = useDispatch();
+
+  //useEffect execute on clicking browser back button
+  useEffect(() => {
+    const handlePopState = async () => {
+      await dispatch(removeFromPath(parentFolder));
+    };
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, [dispatch]);
 
   useEffect(() => {
     const tryLogin = async () => {
