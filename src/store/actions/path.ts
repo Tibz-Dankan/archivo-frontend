@@ -7,10 +7,10 @@ export const addToPath = (folder: Folder) => {
   };
 };
 
-export const removeFromPath = (folder: Folder) => {
+export const removeFromPath = () => {
   console.log("Running remove folder from the path");
   return async (dispatch: any) => {
-    await dispatch(pathActions.removeFolder({ folder: folder }));
+    await dispatch(pathActions.removeFolder());
   };
 };
 
