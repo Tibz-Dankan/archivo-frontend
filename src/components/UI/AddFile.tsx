@@ -2,9 +2,11 @@ import React, { Fragment, useState, useEffect } from "react";
 import { gql, useMutation } from "@apollo/client";
 import { FilePicker } from "./FilePicker";
 import { addNewFile } from "../../store/actions/file";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { File } from "../../store/reducers/file";
 import { useParams } from "react-router-dom";
+import { PathState } from "../../store/reducers/path";
+import { generatePath } from "../../utils/pathGenerator";
 
 const ADD_FILE = gql`
   mutation (
@@ -51,13 +53,15 @@ export const AddFile: React.FC<AddFileProps> = (props): JSX.Element => {
   };
 
   // TODO: dynamically add file path basing file's folder nesting
+  const pathArray = useSelector((state: PathState) => state.path.path);
+  const path = generatePath(pathArray);
 
   const addFileHandler = () => {
-    if (!file) return;
+    if (!file || !path) return;
     addFile({
       variables: {
         file: file,
-        path: "Testing",
+        path: path,
         folderId: folderId,
         subFolderId: subFolderId,
       },
