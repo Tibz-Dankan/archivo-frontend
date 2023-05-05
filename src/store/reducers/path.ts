@@ -14,11 +14,6 @@ interface AddFolderAction {
   type: string;
 }
 
-interface RemoveFolderAction {
-  payload: CurrentFolder;
-  type: string;
-}
-
 export interface PathState {
   path: Path;
 }
@@ -34,7 +29,7 @@ export const pathSlice = createSlice({
     addFolder: (state, action: AddFolderAction) => {
       state.path.push(action.payload.folder);
     },
-    removeFolder: (state, action: RemoveFolderAction) => {
+    removeFolder: (state) => {
       state.path.pop();
     },
     clear: (state) => {

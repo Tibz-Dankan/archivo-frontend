@@ -28,7 +28,7 @@ const App: React.FC = (): JSX.Element => {
   //useEffect execute on clicking browser back button
   useEffect(() => {
     const handlePopState = async () => {
-      await dispatch(removeFromPath(parentFolder));
+      await dispatch(removeFromPath());
     };
     window.addEventListener("popstate", handlePopState);
 
