@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Folder, FolderState } from "../../store/reducers/folder";
 import { updateParentFolder } from "../../store/actions/folder";
 import { addToPath } from "../../store/actions/path";
+import folderIcon from "../../assets/folder.svg";
 
 export const FolderList: React.FC = () => {
   const folders = useSelector((state: FolderState) => state.folder.folders);
@@ -25,10 +26,8 @@ export const FolderList: React.FC = () => {
           <thead>
             <tr>
               <th>No</th>
+              <th>Icon</th>
               <th>Name</th>
-              <th>Owner ID</th>
-              <th>Created At</th>
-              <th>Updated At</th>
             </tr>
           </thead>
           <tbody>
@@ -36,12 +35,15 @@ export const FolderList: React.FC = () => {
               <tr
                 key={folder.id}
                 onClick={() => updateParentFolderHandler(folder)}
+                className="flex"
               >
                 <td>{index + 1}</td>
+                <td>
+                  <svg className="">
+                    <use href={`${folderIcon}#folder`}></use>
+                  </svg>
+                </td>
                 <td>{folder.name}</td>
-                <td>{folder.ownerId}</td>
-                <td>{folder.createdAt}</td>
-                <td>{folder.updatedAt}</td>
               </tr>
             ))}
           </tbody>
