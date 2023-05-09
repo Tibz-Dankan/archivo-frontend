@@ -6,6 +6,7 @@ import { Folder, FolderState } from "../../store/reducers/folder";
 import { updateParentFolder } from "../../store/actions/folder";
 import { addToPath } from "../../store/actions/path";
 import folderIcon from "../../assets/folder.svg";
+import ctl from "@netlify/classnames-template-literals";
 
 export const FolderList: React.FC = () => {
   const folders = useSelector((state: FolderState) => state.folder.folders);
@@ -22,34 +23,30 @@ export const FolderList: React.FC = () => {
   return (
     <Fragment>
       <div>
-        <table>
-          <thead>
-            <tr>
-              <th>No</th>
-              <th>Icon</th>
-              <th>Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            {folders.map((folder: Folder, index: number) => (
-              <tr
-                key={folder.id}
-                onClick={() => updateParentFolderHandler(folder)}
-                className="flex"
-              >
-                <td>{index + 1}</td>
-                <td>
-                  <svg className="">
-                    <use href={`${folderIcon}#folder`}></use>
-                  </svg>
-                </td>
-                <td>{folder.name}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="w-full">
+          {folders.map((folder: Folder, index: number) => (
+            <div
+              key={folder.id}
+              onClick={() => updateParentFolderHandler(folder)}
+              className={folderListClasses}
+            >
+              {/* <span>{index + 1}</span> */}
+              <span>
+                <svg className="">
+                  <use href={`${folderIcon}#folder`}></use>
+                </svg>
+              </span>
+              <span>{folder.name}</span>
+            </div>
+          ))}
+        </div>
         <CreateFolder />
       </div>
     </Fragment>
   );
 };
+
+const folderListClasses = ctl(`
+ bg-green-400
+   flex justify-start align-center
+`);
