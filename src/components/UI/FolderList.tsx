@@ -28,7 +28,8 @@ export const FolderList: React.FC = () => {
             <div
               key={folder.id}
               onClick={() => updateParentFolderHandler(folder)}
-              className={folderListClasses}
+              // className={folderListClasses}
+              className="bg-green-500"
             >
               {/* <span>{index + 1}</span> */}
               <span>
