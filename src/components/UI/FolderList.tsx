@@ -51,3 +51,5 @@ const folderListClasses = ctl(`
  bg-green-400
    flex justify-start align-center
 `);
+
+// TODO: get tailwind config right
