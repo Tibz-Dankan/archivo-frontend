@@ -20,6 +20,8 @@ export const FolderList: React.FC = () => {
     navigate(`/my-folder-idx/${folder.id}`);
   };
 
+  // TODO: To color folder icons using tailwind
+
   return (
     <Fragment>
       <div>
