@@ -22,7 +22,7 @@ export const FolderList: React.FC = () => {
 
   // TODO: To color folder icons using tailwind
   // TODO: To add file  transfer from one folder to another
-  // TODO: To add uniform UI styles
+  // TODO: To add uniform UI stylez
 
   return (
     <Fragment>
